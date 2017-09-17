@@ -1,2 +1,2 @@
-# rpi-kubernetes-ansible
-Kubernetes on Raspberry Pi's with Ansible!
+# rpi-k8s-ansible
+k8s on Raspberry Pi's with Ansible!

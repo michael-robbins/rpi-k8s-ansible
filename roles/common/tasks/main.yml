@@ -1,0 +1,41 @@
+---
+- name: Ensure apt https exists
+  package:
+    name: apt-transport-https
+    state: present
+
+- name: Add in docker apt repo key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add in docker apt repo
+  apt_repository:
+    repo: deb [arch=armhf] https://download.docker.com/linux/debuan stretch stable
+    state: present
+
+- name: Add in k8s apt repo key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add in k8s apt repo
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-stretch main
+    state: present
+
+- name: Update apt repos
+  apt:
+    update_cache: yes
+
+- name: Install docker-ce
+  apt:
+    name: docker-ce=17.06.2
+    state: present
+
+- name: Install k8s (common)
+  apt:
+    name: kubeadm
+    state: present
+
+
