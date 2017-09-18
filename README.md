@@ -1,2 +1,3 @@
 # rpi-k8s-ansible
-k8s on Raspberry Pi's with Ansible!
+
+Raspberry PI's running Kubernetes deployed with Ansible
