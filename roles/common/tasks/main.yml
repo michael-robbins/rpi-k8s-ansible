@@ -11,7 +11,7 @@
 
 - name: Add in docker apt repo
   apt_repository:
-    repo: deb [arch=armhf] https://download.docker.com/linux/debuan stretch stable
+    repo: deb [arch=armhf] https://download.docker.com/linux/debian stretch stable
     state: present
 
 - name: Add in k8s apt repo key
@@ -30,7 +30,7 @@
 
 - name: Install docker-ce
   apt:
-    name: docker-ce=17.06.2
+    name: docker-ce=17.06.2~ce-0~debian
     state: present
 
 - name: Install k8s (common)

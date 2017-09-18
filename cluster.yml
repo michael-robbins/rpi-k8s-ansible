@@ -7,13 +7,13 @@ all:
     ansible_become_user: root
   hosts:
     node01:
-      ansible_host: 192.168.57.171
+      ansible_host: 192.168.58.171
     node02:
-      ansible_host: 192.168.57.172
+      ansible_host: 192.168.58.172
     node03:
-      ansible_host: 192.168.57.173
+      ansible_host: 192.168.58.173
     node04:
-      ansible_host: 192.168.57.174
+      ansible_host: 192.168.58.174
   children:
     k8s-master:
       hosts:

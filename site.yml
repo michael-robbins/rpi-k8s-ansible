@@ -1,2 +1,8 @@
 ---
-- include: 
+- hosts: k8s-master
+  roles:
+    - common
+
+- hosts: k8s-slaves
+  roles:
+    - common
