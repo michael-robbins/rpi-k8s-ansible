@@ -35,8 +35,8 @@
 
 - name: Copy across the Docker deb (temporary until the above repo supports stretch stable)
   copy:
-    src: binaries/docker-ce_17.09.0~ce~rc2-0~raspbian_armhf.deb
-    dest: /tmp/docker-ce_17.09.0~ce~rc2-0~raspbian_armhf.deb
+    src: binaries/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
+    dest: /tmp/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
 
 #- name: Install docker-ce
 #  apt:
@@ -45,11 +45,11 @@
 
 - name: Install docker-ce (temporary until the above repo supports stretch stable)
   apt:
-    deb: /tmp/docker-ce_17.09.0~ce~rc2-0~raspbian_armhf.deb
+    deb: /tmp/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
 
 - name: Delete the .deb (temporary until the above repo supports stretch stable)
   file:
-    path: /tmp/docker-ce_17.09.0~ce~rc2-0~raspbian_armhf.deb
+    path: /tmp/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
     state: absent
 
 - name: Install k8s (common)
