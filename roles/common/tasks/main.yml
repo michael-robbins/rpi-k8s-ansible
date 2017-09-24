@@ -52,7 +52,8 @@
     path: /tmp/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
     state: absent
 
-- name: Install k8s (common)
+- name: Install k8s (common), we're stuck with 1.5.X for the original rPi models (support dropped in 1.6.X)
   apt:
-    name: kubeadm
+    name: kubeadm=1.5.7-00
     state: present
+    force: yes
