@@ -38,3 +38,5 @@
         line: 'initial_turbo=60'
     - name: Reboot Raspberry PI's
       command: reboot
+      async: 0
+      poll: 0
