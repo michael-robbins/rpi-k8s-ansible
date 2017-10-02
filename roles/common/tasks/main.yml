@@ -28,29 +28,10 @@
   apt:
     update_cache: yes
 
-- name: Remove sonic-pi (as it 'supposedly' breaks docker-ce on rpi's)
+- name: Install docker-ce
   apt:
-    name: sonic-pi
-    state: absent
-
-- name: Copy across the Docker deb (temporary until the above repo supports stretch stable)
-  copy:
-    src: binaries/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
-    dest: /tmp/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
-
-#- name: Install docker-ce
-#  apt:
-#    name: docker-ce
-#    state: present
-
-- name: Install docker-ce (temporary until the above repo supports stretch stable)
-  apt:
-    deb: /tmp/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
-
-- name: Delete the .deb (temporary until the above repo supports stretch stable)
-  file:
-    path: /tmp/docker-ce_17.09.0~ce~rc3-0~raspbian_armhf.deb
-    state: absent
+    name: docker-ce
+    state: present
 
 - name: Install k8s (common), we're stuck with 1.5.X for the original rPi models (support dropped in 1.6.X)
   apt:
