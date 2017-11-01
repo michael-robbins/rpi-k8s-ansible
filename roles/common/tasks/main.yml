@@ -33,8 +33,8 @@
     name: docker-ce
     state: present
 
-- name: Install k8s (common), we're stuck with 1.5.X for the original rPi models (support dropped in 1.6.X)
+- name: Install k8s (common)
   apt:
-    name: kubeadm=1.5.7-00
+    name: kubeadm
     state: present
     force: yes

@@ -4,15 +4,16 @@ all:
     ansible_user: pi
     ansible_become: true
     ansible_become_user: root
+    pod_network_cidr: 10.244.0.0/16
   hosts:
     node01:
-      ansible_host: 192.168.58.171
+      ansible_host: 192.168.58.113
     node02:
-      ansible_host: 192.168.58.172
+      ansible_host: 192.168.58.108
     node03:
-      ansible_host: 192.168.58.173
+      ansible_host: 192.168.58.112
     node04:
-      ansible_host: 192.168.58.174
+      ansible_host: 192.168.58.110
   children:
     k8s-master:
       hosts:
