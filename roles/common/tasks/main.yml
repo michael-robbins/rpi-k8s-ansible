@@ -38,3 +38,26 @@
     name: kubeadm
     state: present
     force: yes
+
+- name: Discover swap status
+  shell: cat /proc/swaps | wc -l
+  register: swap_out
+
+- name: Register swap status
+  set_fact:
+    swap_enabled: swap_out == "2"
+
+- name: Disable swap if enabled
+  shell: |
+    dphys-swapfile swapoff
+    dphys-swapfile uninstall
+    update-rc.d dphys-swapfile remove
+  when: swap_enabled
+
+- name: Enable memory cgroup for k8s
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '^dwc(.*)$'
+#    line: 'cgroup_enable=memory dwc\1'  # This can be enabled once 4.14 is on rpi
+    line: 'cgroup_enable=cpuset cgroup_memory=1 dwc\1'
+    backrefs: yes

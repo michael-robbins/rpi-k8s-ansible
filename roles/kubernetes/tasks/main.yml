@@ -1,0 +1,21 @@
+---
+- name: Discover node status
+  include: discover.yml
+
+- name: Create the cluster
+  include: init.yml
+  when:
+    - node == "master"
+    - cluster != "initialized"
+  tags:
+    - init
+
+- name: Join the cluster
+  include: join.yml
+  when:
+    - node == "slave"
+    - cluster != "joined"
+    - token is defined and token != ''
+    - master_ip is defined and master_ip != ''
+  tags:
+    - join

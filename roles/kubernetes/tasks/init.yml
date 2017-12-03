@@ -1,0 +1,16 @@
+---
+- name: Generate a token beforehand
+  command: kubeadm token generate
+  register: token
+
+- name: Init the cluster
+  command: kubeadm init --token {{ token }} --pod-network-cidr {{ pod_network_cidr }}
+  register: out
+
+- name: Print stdout
+  debug:
+    var: out
+
+- name: Show token and IP
+  debug:
+    msg: "Created cluster with token '{{ token }}'"

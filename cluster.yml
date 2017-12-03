@@ -4,7 +4,6 @@ all:
     ansible_user: pi
     ansible_become: true
     ansible_become_user: root
-    pod_network_cidr: 10.244.0.0/16
   hosts:
     node01:
       ansible_host: 192.168.58.113
@@ -18,8 +17,12 @@ all:
     k8s-master:
       hosts:
         node01:
+      vars:
+        node: "master"
     k8s-slaves:
       hosts:
         node02:
         node03:
         node04:
+      vars:
+        node: "slave"

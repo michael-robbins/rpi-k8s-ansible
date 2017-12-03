@@ -1,0 +1,55 @@
+---
+- name: Check the cluster membership
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: st
+  when: node == "master"
+
+- name: register master initialized status
+  set_fact: 
+    cluster: "initialized"
+  when:
+    - node == "master"
+    - st.stat.exists
+
+- name: Check the cluster membership
+  stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: st
+  when: node == "slave"
+
+- name: register slaves initialized status
+  set_fact: 
+    cluster: "joined"
+  when:
+    - node == "slave"
+    - st.stat.exists
+
+- name: Get the IP address of the node
+  shell: ifconfig eth0 | grep 'inet ' | awk '{print $2}'
+  register: ipaddress_out
+
+- name: Set the master_ip
+  set_fact:
+    master_ip: "{{ ipaddress_out.stdout }}"
+  when: node == "master"
+
+- name: Set the node_ip
+  set_fact:
+    node_ip: "{{ ipaddress_out.stdout }}"
+
+- name: Get the current token
+  shell: kubeadm token list | grep 'authentication,signing' | awk '{print $1}'
+  register: token_out
+  when:
+    - node == "master"
+    - cluster == "initialized"
+
+- name: Set the current token
+  set_fact:
+    token: "{{ token_out.stdout }}"
+  when:
+    - node == "master"
+    - cluster == "initialized"
+    - token_out is defined
+    - token_out != ""

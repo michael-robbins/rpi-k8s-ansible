@@ -2,7 +2,9 @@
 - hosts: k8s-master
   roles:
     - common
+    - kubernetes
 
 - hosts: k8s-slaves
   roles:
     - common
+    - kubernetes
