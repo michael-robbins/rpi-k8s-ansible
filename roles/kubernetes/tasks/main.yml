@@ -10,12 +10,18 @@
   tags:
     - init
 
+- debug: var=node
+- debug: var=cluster
+- debug: var=token
+- debug: var=master_ip
+- debug: var=node_ip
+
 - name: Join the cluster
   include: join.yml
   when:
     - node == "slave"
     - cluster != "joined"
-    - token is defined and token != ''
-    - master_ip is defined and master_ip != ''
+    - token is defined and token != ""
+    - master_ip is defined and master_ip != ""
   tags:
     - join

@@ -3,7 +3,6 @@
   roles:
     - common
     - kubernetes
-
 - hosts: k8s-slaves
   roles:
     - common

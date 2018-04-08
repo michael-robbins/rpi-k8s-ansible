@@ -2,27 +2,32 @@ all:
   vars:
     ansible_connection: ssh
     ansible_user: pi
+    ansible_ssh_pass: raspberry
     ansible_become: true
     ansible_become_user: root
   hosts:
+    node00:
+      ansible_host: 192.168.58.60
     node01:
-      ansible_host: 192.168.58.113
+      ansible_host: 192.168.58.61
     node02:
-      ansible_host: 192.168.58.108
+      ansible_host: 192.168.58.62
     node03:
-      ansible_host: 192.168.58.112
+      ansible_host: 192.168.58.63
     node04:
-      ansible_host: 192.168.58.110
+      ansible_host: 192.168.58.64
   children:
     k8s-master:
       hosts:
-        node01:
+        node00:
       vars:
         node: "master"
     k8s-slaves:
       hosts:
+        node01:
         node02:
         node03:
         node04:
       vars:
         node: "slave"
+        master_ip: 192.168.58.60

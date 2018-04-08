@@ -11,6 +11,7 @@
   when:
     - node == "master"
     - st.stat.exists
+    - reset != true
 
 - name: Check the cluster membership
   stat:
@@ -28,11 +29,6 @@
 - name: Get the IP address of the node
   shell: ifconfig eth0 | grep 'inet ' | awk '{print $2}'
   register: ipaddress_out
-
-- name: Set the master_ip
-  set_fact:
-    master_ip: "{{ ipaddress_out.stdout }}"
-  when: node == "master"
 
 - name: Set the node_ip
   set_fact:
@@ -53,3 +49,29 @@
     - cluster == "initialized"
     - token_out is defined
     - token_out != ""
+
+- name: Generate a new token if there isn't one
+  shell: kubeadm token create
+  when:
+    - node == "master"
+    - cluster == "initialized"
+    - token is not defined
+
+- name: Get the current token
+  shell: kubeadm token list | grep 'authentication,signing' | awk '{print $1}'
+  register: token_out
+  when:
+    - node == "master"
+    - cluster == "initialized"
+    - token is not defined
+
+- name: Set the current token
+  set_fact:
+    token: "{{ token_out.stdout }}"
+  when:
+    - node == "master"
+    - cluster == "initialized"
+    - token is not defined
+    - token_out is defined
+    - token_out != ""
+

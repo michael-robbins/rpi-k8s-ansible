@@ -1,4 +1,5 @@
 ---
+reset: false
 cluster: ""
 
 pod_network_cidr: 10.244.0.0/16

@@ -3,6 +3,9 @@
   command: kubeadm token generate
   register: token
 
+- name: Reset Kubernetes Master
+  command: kubeadm reset
+
 - name: Init the cluster
   command: kubeadm init --token {{ token }} --pod-network-cidr {{ pod_network_cidr }}
   register: out
