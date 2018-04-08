@@ -7,7 +7,7 @@
   command: kubeadm reset
 
 - name: Init the cluster
-  command: kubeadm init --token {{ token }} --pod-network-cidr {{ pod_network_cidr }}
+  command: kubeadm init --token {{ token.stdout }} --pod-network-cidr {{ pod_network_cidr }}
   register: out
 
 - name: Print stdout
@@ -16,4 +16,4 @@
 
 - name: Show token and IP
   debug:
-    msg: "Created cluster with token '{{ token }}'"
+    msg: "Created cluster with token '{{ token.stdout }}'"

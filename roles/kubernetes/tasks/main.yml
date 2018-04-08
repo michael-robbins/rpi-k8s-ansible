@@ -1,9 +1,9 @@
 ---
 - name: Discover node status
-  include: discover.yml
+  include_tasks: discover.yml
 
 - name: Create the cluster
-  include: init.yml
+  include_tasks: init.yml
   when:
     - node == "master"
     - cluster != "initialized"
@@ -17,11 +17,11 @@
 - debug: var=node_ip
 
 - name: Join the cluster
-  include: join.yml
+  include_tasks: join.yml
   when:
     - node == "slave"
     - cluster != "joined"
-    - token is defined and token != ""
+    - token is defined and token.stdout != ""
     - master_ip is defined and master_ip != ""
   tags:
     - join
