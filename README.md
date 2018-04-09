@@ -5,16 +5,16 @@ Raspberry PI's running Kubernetes deployed with Ansible
 
 ## apt-get upgrade
 ```
-ansible-playbook -i cluster.yml upgrade.yml
+ansible-playbook -i cluster.yml playbooks/upgrade.yml
 ```
 
 ## rpi3b & rpi3bp overclocks
 ```
-ansible-playbook -i cluster.yml overclock-rpi3p.yml -l node00
-ansible-playbook -i cluster.yml overclock-rpi3.yml -l node01
-ansible-playbook -i cluster.yml overclock-rpi3.yml -l node02
-ansible-playbook -i cluster.yml overclock-rpi3.yml -l node03
-ansible-playbook -i cluster.yml overclock-rpi3.yml -l node04
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3p.yml -l node00
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node01
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node02
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node03
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node04
 ```
 
 ## Bootstrap k8s master

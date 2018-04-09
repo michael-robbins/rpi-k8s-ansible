@@ -41,7 +41,13 @@
         path: /boot/config.txt
         regexp: '^initial_turbo='
         line: 'initial_turbo=60'
-    - name: Reboot Raspberry PI's
-      command: reboot
-      async: 0
+    - name: Reboot host
+      shell: sleep 2 && /sbin/shutdown -r now "Ansible reboot"
+      async: 1
       poll: 0
+    - name: Wait for host to come back up
+      become: false
+      wait_for_connection:
+        delay: 15
+        sleep: 2
+        timeout: 120
