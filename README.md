@@ -35,11 +35,11 @@ ansible-playbook -i cluster.yml playbooks/upgrade.yml
 
 ## rpi3b & rpi3bp overclocks
 ```
+# Node 00 is an rpi3b+ for me
 ansible-playbook -i cluster.yml playbooks/overclock-rpi3p.yml -l node00
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node01
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node02
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node03
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l node04
+
+# The rest of the nodes are all rpi3b's
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l 'all:!node00'
 ```
 
 ## Bootstrap k8s master
