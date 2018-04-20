@@ -31,3 +31,21 @@
     - master_ip is defined and master_ip != ""
   tags:
     - join
+
+- name: Show cluster status
+  shell: kubectl get nodes
+  register: nodes_out
+  when:
+    - node == "master"
+    - cluster == "initialized"
+
+- debug: var=nodes_out
+
+- name: Enable CNI (weave)
+  shell: kubectl apply -f https://git.io/weave-kube-1.6
+  register: cni_out
+  when:
+    - node == "master"
+    - cluster == "initialized"
+
+- debug: var=cni_out

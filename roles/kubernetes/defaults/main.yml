@@ -2,6 +2,8 @@
 reset: false
 cluster: ""
 
+master_port: 6443
+
 pod_network_cidr: 10.244.0.0/16
 
 flannel_version: "v0.9.1"

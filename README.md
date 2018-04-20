@@ -42,7 +42,10 @@ ansible-playbook -i cluster.yml playbooks/overclock-rpi3p.yml -l node00
 ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l 'all:!node00'
 ```
 
-## Bootstrap k8s master
+## Install k8s
 ```
-ansible-playbook -i cluster.yml site.yml -l node00
+ansible-playbook -i cluster.yml site.yml
+
+# When running again, feel free to ignore the common tag as this will reboot the rpi's
+ansible-playbook -i cluster.yml site.yml --skip-tags common
 ```

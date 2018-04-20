@@ -36,11 +36,11 @@
 
 - name: Wait up to 2 minutes for the k8s API server to come up
   shell: kubeadm token list
-  register: token_out
+  register: api_test
   when:
     - node == "master"
     - cluster == "initialized"
-  until: token_out.rc == 0
+  until: api_test.rc == 0
   retries: 12
   delay: 10
 

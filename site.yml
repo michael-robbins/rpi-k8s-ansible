@@ -1,9 +1,10 @@
 ---
-- hosts: k8s-master
+- hosts: all
   roles:
     - common
-    - kubernetes
-- hosts: k8s-slaves
-  roles:
+  tags:
     - common
+
+- hosts: all
+  roles:
     - kubernetes

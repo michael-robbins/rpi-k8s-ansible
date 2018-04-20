@@ -1,19 +1,30 @@
 ---
 - name: Generate a token beforehand
   command: kubeadm token generate
-  register: token
+  register: token_out
 
-- name: Reset Kubernetes Master
-  command: kubeadm reset
+- name: Set token
+  set_fact:
+    token: "{{ token_out.stdout }}"
 
 - name: Init the cluster
-  command: kubeadm init --token {{ token.stdout }} --pod-network-cidr {{ pod_network_cidr }}
+  command: kubeadm init --token {{ token }} --pod-network-cidr {{ pod_network_cidr }}
   register: out
 
 - name: Print stdout
   debug:
     var: out
 
-- name: Show token and IP
-  debug:
-    msg: "Created cluster with token '{{ token.stdout }}'"
+- name: Allow current user (assumed to be root) to run kubectl commands
+  shell: |
+    mkdir -p ${HOME}/.kube
+    cp -i /etc/kubernetes/admin.conf ${HOME}/.kube/config
+    chown $(id -u):$(id -g) ${HOME}/.kube/config
+  creates: ${HOME}/.kube/config
+
+- name: Allow pi user to run kubectl commands
+  shell: |
+    mkdir -p /home/pi/.kube
+    cp -i /etc/kubernetes/admin.conf /home/pi/.kube/config
+    chown $(id pi -u):$(id pi -g) /home/pi/.kube/config
+  creates: /home/pi/.kube/config
