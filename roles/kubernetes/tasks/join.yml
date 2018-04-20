@@ -1,6 +1,6 @@
 ---
 - name: Join the cluster
-  command: kubeadm join --token {{ token }} {{ master_ip }}:{{ master_port }}
+  command: kubeadm join --token {{ token }} {{ master_ip }}
   register: out
 
 - name: Print stdout

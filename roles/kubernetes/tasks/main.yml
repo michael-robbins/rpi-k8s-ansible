@@ -2,6 +2,9 @@
 - name: Discover node status
   include_tasks: discover.yml
 
+- debug: var=node
+- debug: var=cluster
+
 - name: Create the cluster
   include_tasks: init.yml
   when:
@@ -10,18 +13,21 @@
   tags:
     - init
 
-- debug: var=node
-- debug: var=cluster
-- debug: var=token
-- debug: var=master_ip
+- name: Set the master information
+  set_fact:
+    master_ip: "{{ hostvars['node00'].node_ip }}"  # Need to be set after discovery
+    token: "{{ hostvars['node00'].token }}"  # Need to be set after discovery/init
+
 - debug: var=node_ip
+- debug: var=master_ip
+- debug: var=token
 
 - name: Join the cluster
   include_tasks: join.yml
   when:
     - node == "slave"
     - cluster != "joined"
-    - token is defined and token.stdout != ""
+    - token is defined and token != ""
     - master_ip is defined and master_ip != ""
   tags:
     - join
