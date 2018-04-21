@@ -6,7 +6,7 @@ Raspberry PI's running Kubernetes deployed with Ansible
 # Write the image to the SD card
 $ sudo dd if=YYYY-MM-DD-raspbian-stretch-lite.img of=/dev/sdX bs=16M status=progress
 
-# Provision wifi settings
+# Provision wifi settings on first boot
 $ cat wpa_supplicant.conf
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
