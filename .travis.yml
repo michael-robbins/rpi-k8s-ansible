@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker build --tag michaelrobbins/k8s-example-web docker/example_ha_website/web/
+
+deploy:
+  provider: script
+  script: bash docker/docker_push.sh michaelrobbins/k8s-example-web
+  on:
+    branch: master
