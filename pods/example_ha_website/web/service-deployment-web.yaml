@@ -12,7 +12,7 @@ spec:
     app: nginx
     tier: web
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webserver-deployment
