@@ -32,6 +32,9 @@
   tags:
     - join
 
+- name: Discover node status again once everyone has joined
+  include_tasks: discover.yml
+
 - name: Show cluster status
   shell: kubectl get nodes
   register: nodes_out
