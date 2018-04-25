@@ -58,6 +58,7 @@ ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l 'all:!node00'
 
 ## Install k8s
 ```
+# Bootstrap the master and all slaves
 ansible-playbook -i cluster.yml site.yml
 
 # When running again, feel free to ignore the common tag as this will reboot the rpi's
