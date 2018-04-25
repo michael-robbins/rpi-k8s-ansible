@@ -24,6 +24,23 @@ $ cp wpa_supplicant.conf /mnt/boot/
 $ touch /mnt/boot/ssh
 ```
 
+```
+Example flash and ssh/wifi:
+sudo umount /media/<user>/boot
+sudo umount /media/<user>/rootfs
+sudo dd if=2018-04-18-raspbian-stretch-lite.img of=/dev/<disk> bs=16M status=progress
+sync
+
+# Unplug/replug SD card
+
+cp wpa_supplicant.conf /media/<user>/boot/
+touch /media/<user>/boot/ssh
+sync
+sudo umount /media/<user>/boot
+sudo umount /media/<user>/rootfs
+
+```
+
 # Examples
 ## apt-get upgrade
 ```
