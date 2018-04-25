@@ -19,7 +19,7 @@
 - name: Copy in the kubernetes config to the root user
   copy:
     src: /etc/kubernetes/admin.conf
-    dst: /root/.kube/config
+    dest: /root/.kube/config
     remote_src: yes
     owner: root
     group: root
@@ -30,7 +30,7 @@
 - name: Copy in the kubernetes config to the pi user
   copy:
     src: /etc/kubernetes/admin.conf
-    dst: /home/pi/.kube/config
+    dest: /home/pi/.kube/config
     remote_src: yes
     owner: pi
     group: pi
