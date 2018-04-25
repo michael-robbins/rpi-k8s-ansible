@@ -40,15 +40,5 @@
   register: nodes_out
   when:
     - node == "master"
-    - cluster == "initialized"
 
 - debug: var=nodes_out
-
-- name: Enable CNI (weave)
-  shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-  register: cni_out
-  when:
-    - node == "master"
-    - cluster == "initialized"
-
-- debug: var=cni_out

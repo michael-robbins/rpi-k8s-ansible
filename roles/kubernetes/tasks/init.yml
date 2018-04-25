@@ -9,11 +9,9 @@
 
 - name: Init the cluster
   command: kubeadm init --token {{ token }} --pod-network-cidr {{ pod_network_cidr }}
-  register: out
+  register: init_out
 
-- name: Print stdout
-  debug:
-    var: out
+- debug: var=init_out
 
 - name: Allow current user (assumed to be root) to run kubectl commands
   shell: |
@@ -28,3 +26,9 @@
     cp -i /etc/kubernetes/admin.conf /home/pi/.kube/config
     chown $(id pi -u):$(id pi -g) /home/pi/.kube/config
   creates: /home/pi/.kube/config
+
+- name: Enable CNI (weave)
+  shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+  register: cni_out
+
+- debug: var=cni_out
