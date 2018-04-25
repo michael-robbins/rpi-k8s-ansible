@@ -41,7 +41,13 @@ sudo umount /media/<user>/rootfs
 
 ```
 
-# Examples
+## Updating cluster.yml
+This is where there individual rPi's are set to be a master or a slave.
+I have not changed any passwords or configured SSH keys as this cannot be easily done with a headless rPi setup.
+I am currently using DHCP static assignment to ensure each PI's MAC address is given the same IP address.
+Update the file as required for your specific setup.
+
+# Example Playbooks
 ## apt-get upgrade
 ```
 ansible-playbook -i cluster.yml playbooks/upgrade.yml
