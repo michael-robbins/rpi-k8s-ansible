@@ -68,7 +68,7 @@
   lineinfile:
     path: /boot/cmdline.txt
     regexp: '^dwc(.*)$'
-    line: 'cgroup_enable=memory cgroup_memory=1 swapaccount=1 dwc\1'
+    line: 'cgroup_enable=memory cgroup_memory=1 dwc\1'
     backrefs: yes
 
 - name: Reboot host
