@@ -45,7 +45,7 @@
 - debug: var=nodes_out
 
 - name: Enable CNI (weave)
-  shell: kubectl apply -f https://git.io/weave-kube-1.6
+  shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
   register: cni_out
   when:
     - node == "master"
