@@ -1,6 +1,10 @@
 # rpi-k8s-ansible
 Raspberry PI's running Kubernetes deployed with Ansible
 
+Master: rPi 3b+
+Slaves: rPi 3b x4
+CNI: Flannel (Weave support is there, but it crashes and reboot's the rPi's, see below)
+
 ## Preparing an SD card
 ```
 # Write the image to the SD card, please use at least 2018-04-18 if you want to use WiFi
@@ -41,7 +45,7 @@ sudo umount /media/<user>/rootfs
 
 ```
 
-## Updating cluster.yml
+## Updating cluster.yml to match your environment
 This is where there individual rPi's are set to be a master or a slave.
 I have not changed any passwords or configured SSH keys as this cannot be easily done with a headless rPi setup.
 I am currently using DHCP static assignment to ensure each PI's MAC address is given the same IP address.
@@ -87,4 +91,4 @@ pi@node00:~ $ kubectl nodes get
 
 See https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975 for more discussion.
 
-Instead I've decided to move to Flannel, will see how that goes!
+Instead I've decided to move to Flannel, which is working nicely so far.
