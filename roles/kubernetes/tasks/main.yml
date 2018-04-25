@@ -15,7 +15,6 @@
 
 - name: Set the master information
   set_fact:
-    master_ip: "{{ hostvars['node00'].node_ip }}"  # Need to be set after discovery
     token: "{{ hostvars['node00'].token }}"  # Need to be set after discovery/init
 
 - debug: var=node_ip

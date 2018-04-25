@@ -4,7 +4,8 @@ cluster: ""
 
 master_port: 6443
 
-pod_network_cidr: 10.244.0.0/16
+cni: "flannel"
 
-flannel_version: "v0.9.1"
-flannel_url: "https://raw.githubusercontent.com/coreos/flannel/{{ flannel_version }}/Documentation/kube-flannel.yml"
+cni_init_extra:
+  flannel: "--pod-network-cidr=10.244.0.0/16"
+  weave: ""

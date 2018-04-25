@@ -1,0 +1,10 @@
+---
+- name: Enable Flannel CNI
+  shell: "curl -sSL https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml | sed 's/amd64/arm/g' | kubectl create -f -"
+  register: cni_out
+
+- debug: var=cni_out
+
+- name: Wait for Flannel to stabalize (5 minutes)
+  pause:
+    minutes: 5

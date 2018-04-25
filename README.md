@@ -63,10 +63,28 @@ ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l 'all:!node00'
 ```
 
 ## Install k8s
+With the below commands, you need to include the master node (node00) in all executions for the token to be set correctly.
 ```
 # Bootstrap the master and all slaves
 ansible-playbook -i cluster.yml site.yml
 
+# Bootstrap a single slave (node05)
+ansible-playbook -i cluster.yml site.yml -l node00,node05
+
 # When running again, feel free to ignore the common tag as this will reboot the rpi's
 ansible-playbook -i cluster.yml site.yml --skip-tags common
 ```
+
+Using Weave as the k8s CNI resulted in quite a few kernel oops and the rPi's rebooting:
+```
+pi@node00:~ $ kubectl nodes get
+ kernel:[  152.913108] Internal error: Oops: 80000007 [#1] SMP ARM
+ kernel:[  152.928828] Process weaver (pid: 4515, stack limit = 0x90266210)
+ kernel:[  152.929514] Stack: (0x902679f0 to 0x90268000)
+ kernel:[  152.930180] 79e0:                                     00000000 00000000 3d3aa8c0 90267a88
+ kernel:[  152.931470] 7a00: 0000801a 0000cbb6 a8b538d0 a8b53898 90267d2c 7f75ead0 00000001 90267a5c
+```
+
+See https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975 for more discussion.
+
+Instead I've decided to move to Flannel, will see how that goes!
