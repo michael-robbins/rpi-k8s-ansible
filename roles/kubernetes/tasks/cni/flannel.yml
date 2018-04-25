@@ -5,6 +5,20 @@
 
 - debug: var=cni_out
 
-- name: Wait for Flannel to stabalize (5 minutes)
+- name: Wait for the Flannel CNI pods to stabalize
+  shell: kubectl get pods --all-namespaces=kube-system | grep kube-flannel | grep Running | wc -l
+  register: cni_test
+  until: cni_test.stdout == '1'
+  retries: 12
+  delay: 10
+
+- name: Give the DNS pods 30 seconds to trigger a restart
   pause:
-    minutes: 5
+    seconds: 30
+
+- name: Wait for the DNS pods to stabalize
+  shell: kubectl get pods --all-namespaces=kube-system | grep kube-dns | grep Running | wc -l
+  register: dns_test
+  until: dns_test.stdout == '1'
+  retries: 12
+  delay: 10
