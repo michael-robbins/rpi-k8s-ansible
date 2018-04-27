@@ -1,17 +1,19 @@
 ---
+# A service bridges a set of pods to an external port on the cluster
 apiVersion: v1
 kind: Service
 metadata:
   name: webserver-service
 spec:
-  ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
   selector:
     app: nginx
     tier: web
+  ports:
+  - protocol: TCP
+    port: 80  # Port the client connects to
+    targetPort: 80  # Port on the Pod traffic is forwarded to
 ---
+# A deployment contains the pod spec and replica config
 apiVersion: apps/v1
 kind: Deployment
 metadata:
