@@ -97,12 +97,19 @@ Instead I've decided to move to Flannel, which is working nicely so far.
 ## Example HA web service
 This example will create a Service, Deployment and 3x Nginx pods that will print out the node name they are running on!
 ```
+pi@node00:~ $ kubectl get pods
+No resources found.
 pi@node00:~ $ kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/pods/example_ha_website/web/service-deployment-web.yaml
 service "webserver-service" created
 deployment.apps "webserver-deployment" created
 pi@node00:~ $ kubectl get pods
 NAME                                    READY     STATUS              RESTARTS   AGE
-webserver-deployment-7c7948b97f-2rfmg   0/1       ContainerCreating   0          12s
-webserver-deployment-7c7948b97f-7n98d   0/1       ContainerCreating   0          12s
-webserver-deployment-7c7948b97f-xz94k   0/1       ContainerCreating   0          12s
+webserver-deployment-7c7948b97f-q9bpk   0/1       ContainerCreating   0          5s
+webserver-deployment-7c7948b97f-s95tp   0/1       ContainerCreating   0          5s
+webserver-deployment-7c7948b97f-tls8n   0/1       ContainerCreating   0          5s
+pi@node00:~ $ kubectl get pods
+NAME                                    READY     STATUS    RESTARTS   AGE
+webserver-deployment-7c7948b97f-q9bpk   1/1       Running   0          28s
+webserver-deployment-7c7948b97f-s95tp   1/1       Running   0          28s
+webserver-deployment-7c7948b97f-tls8n   1/1       Running   0          28s
 ```
