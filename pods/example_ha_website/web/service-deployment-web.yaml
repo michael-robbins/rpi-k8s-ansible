@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: webserver-service
+  name: webserver
 spec:
   selector:
     app: nginx
@@ -12,17 +12,18 @@ spec:
   - protocol: TCP
     port: 80  # Port the client connects to
     targetPort: 80  # Port on the Pod traffic is forwarded to
+  type: NodePort  # A random high port will be allocated on all cluster nodes to this service
 ---
 # A deployment contains the pod spec and replica config
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webserver-deployment
+  name: webserver
   labels:
     app: nginx
     tier: web
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: nginx
@@ -40,7 +41,7 @@ spec:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           timeoutSeconds: 2
         ports:
         - containerPort: 80
