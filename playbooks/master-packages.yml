@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: Install recommended packages for the master node
+      apt: name={{item}} state=installed
+      with_items:
+      - vim
+      - ack-grep
