@@ -168,3 +168,9 @@ webserver-deployment-7c7948b97f-q9bpk   1/1       Running   0          27m      
 webserver-deployment-7c7948b97f-s95tp   1/1       Running   0          27m       10.244.4.6   node02
 webserver-deployment-7c7948b97f-tls8n   1/1       Unknown   0          27m       10.244.3.6
 ```
+
+# Extra misc commands
+```
+# Shutdown all nodes
+ansible -i cluster.yml -a "shutdown -h now" all
+```
