@@ -1,3 +1,5 @@
+---
+
 # Pinned to 1.10.2 see https://github.com/kubernetes/kubernetes/issues/64234
 k8s_packages:
 - kubeadm=1.10.2-00
