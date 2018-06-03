@@ -45,9 +45,10 @@
 
 - name: Install k8s (common)
   apt:
-    name: kubeadm
+    name: "{{ item }}"
     state: present
     force: yes
+  with_items: "{{ k8s_packages }}"
 
 - name: Discover swap status
   shell: cat /proc/swaps | wc -l
