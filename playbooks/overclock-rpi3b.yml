@@ -41,6 +41,11 @@
         path: /boot/config.txt
         regexp: '^initial_turbo='
         line: 'initial_turbo=60'
+    - name: SD Card Overclock
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^dtparam=sd_overclock='
+        line: 'dtparam=sd_overclock=83'
     - name: Reboot host
       shell: sleep 2 && /sbin/shutdown -r now "Ansible reboot"
       async: 1

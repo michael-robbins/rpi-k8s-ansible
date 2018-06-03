@@ -1,8 +1,8 @@
 # rpi-k8s-ansible
 Raspberry PI's running Kubernetes deployed with Ansible
 
-Master: rPi 3b+
-Slaves: rPi 3b x4
+Master: rPi 3b+  
+Slaves: rPi 3b x4  
 CNI: Flannel (Weave support is there, but it crashes and reboot's the rPi's, see below)
 
 ## Preparing an SD card
@@ -46,9 +46,9 @@ sudo umount /media/<user>/rootfs
 ```
 
 ## Updating cluster.yml to match your environment
-This is where there individual rPi's are set to be a master or a slave.
-I have not changed any passwords or configured SSH keys as this cannot be easily done with a headless rPi setup.
-I am currently using DHCP static assignment to ensure each PI's MAC address is given the same IP address.
+This is where there individual rPi's are set to be a master or a slave.  
+I have not changed any passwords or configured SSH keys as this cannot be easily done with a headless rPi setup.  
+I am currently using DHCP static assignment to ensure each PI's MAC address is given the same IP address.  
 Update the file as required for your specific setup.
 
 # Example Playbooks
@@ -60,10 +60,10 @@ ansible-playbook -i cluster.yml playbooks/upgrade.yml
 ## rpi3b & rpi3bp overclocks
 ```
 # Node 00 is an rpi3b+ for me
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3p.yml -l node00
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3bp.yml -l node00
 
 # The rest of the nodes are all rpi3b's
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3.yml -l 'all:!node00'
+ansible-playbook -i cluster.yml playbooks/overclock-rpi3b.yml -l 'all:!node00'
 ```
 
 ## Install k8s
@@ -114,8 +114,8 @@ webserver-deployment-7c7948b97f-s95tp   1/1       Running   0          28s
 webserver-deployment-7c7948b97f-tls8n   1/1       Running   0          28s
 ```
 
-We can then simulate node failure by shutting down a node.
-It took around 5 minutes for k8s to detect the node failure and respond by rescheudling the pod on another node.
+We can then simulate node failure by shutting down a node.  
+It took around 5 minutes for k8s to detect the node failure and respond by rescheudling the pod on another node.  
 Currently investigating how we can speed this up.
 ```
 pi@node03:~ $ sudo shutdown -h now
