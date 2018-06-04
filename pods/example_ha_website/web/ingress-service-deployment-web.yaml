@@ -1,9 +1,26 @@
 ---
+# An Ingress controller proxies traffic between the outside world and a Service
+# This document configures the cluster Ingress controller with the correct proxy configuration
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: website
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: website
+          servicePort: 80
+---
 # A service bridges a set of pods to an external port on the cluster
 apiVersion: v1
 kind: Service
 metadata:
-  name: webserver
+  name: website
 spec:
   selector:
     app: nginx
