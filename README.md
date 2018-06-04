@@ -95,11 +95,26 @@ Instead I've decided to move to Flannel, which is working nicely so far.
 
 # Running stuff on the cluster!
 ## Example HA web service
-This example will create a Service, Deployment and 3x Nginx pods that will print out the node name they are running on!
+This example will create a, Ingress Controller, Service, Deployment and 5x Nginx pods that will print out the node name they are running on!
 ```
 pi@node00:~ $ kubectl get pods
 No resources found.
-pi@node00:~ $ kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/pods/example_ha_website/web/service-deployment-web.yaml
+pi@node00:~ $ kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/pods/example_ha_website/web/ingress-controller-base.yaml
+namespace "ingress-nginx" configured
+deployment.extensions "default-http-backend" configured
+service "default-http-backend" unchanged
+configmap "nginx-configuration" unchanged
+configmap "tcp-services" unchanged
+configmap "udp-services" unchanged
+serviceaccount "nginx-ingress-serviceaccount" unchanged
+clusterrole.rbac.authorization.k8s.io "nginx-ingress-clusterrole" configured
+role.rbac.authorization.k8s.io "nginx-ingress-role" unchanged
+rolebinding.rbac.authorization.k8s.io "nginx-ingress-role-nisa-binding" unchanged
+clusterrolebinding.rbac.authorization.k8s.io "nginx-ingress-clusterrole-nisa-binding" configured
+deployment.extensions "nginx-ingress-controller" configured
+pi@node00:~ $ kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/pods/example_ha_website/web/ingress-service-nodeport.yaml
+
+pi@node00:~ $ kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/pods/example_ha_website/web/ingress-service-deployment-web.yaml
 service "webserver-service" created
 deployment.apps "webserver-deployment" created
 pi@node00:~ $ kubectl get pods
