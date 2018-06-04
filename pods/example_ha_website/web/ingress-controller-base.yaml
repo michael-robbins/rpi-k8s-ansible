@@ -244,9 +244,7 @@ spec:
         - name: nginx-ingress-controller
           # We cannot use this until the fix for https://github.com/kubernetes/ingress-nginx/issues/2547 is made available
           #image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller-arm:0.15.0
-
-          # This image has the fix in in for the time being
-          image: toolboc/nginx-ingress-controller-arm:0.15.0
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller-arm:0.14.0
           args:
             - /nginx-ingress-controller
             - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
