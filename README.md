@@ -10,13 +10,13 @@ Workers:
 
 CNI: Flannel (Weave support is there, but it crashes and reboot's the rPi's, see below)
 
-## Preparing an SD card
+## Preparing an SD card on Linux
 ```
 # Write the image to the SD card, please use at least 2018-04-18 if you want to use WiFi
 $ sudo dd if=YYYY-MM-DD-raspbian-stretch-lite.img of=/dev/sdX bs=16M status=progress
 
 # Provision wifi settings on first boot
-$ cat wpa_supplicant.conf
+$ cat bootstrap/wpa_supplicant.conf
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
 country=AU
@@ -27,10 +27,10 @@ network={
     key_mgmt=WPA-PSK
 }
 
-$ cp wpa_supplicant.conf /mnt/boot/
+$ cp bootstrap/wpa_supplicant.conf /mnt/boot/
 
 # Enable SSH on first boot
-$ touch /mnt/boot/ssh
+$ cp bootstrap/ssh /mnt/boot/ssh
 ```
 
 ```
@@ -47,7 +47,6 @@ touch /media/<user>/boot/ssh
 sync
 sudo umount /media/<user>/boot
 sudo umount /media/<user>/rootfs
-
 ```
 
 ## Updating cluster.yml to match your environment
