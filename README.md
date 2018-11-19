@@ -3,6 +3,7 @@ Raspberry PI's running Kubernetes deployed with Ansible
 
 Masters:
 - rPi 3b+ x1
+
 Workers:
 - rPi 3b+ x2
 - rPi 3b x4
