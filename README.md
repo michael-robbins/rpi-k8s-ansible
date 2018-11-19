@@ -1,8 +1,12 @@
 # rpi-k8s-ansible
 Raspberry PI's running Kubernetes deployed with Ansible
 
-Master: rPi 3b+  
-Slaves: rPi 3b x4  
+Masters:
+- rPi 3b+ x1
+Workers:
+- rPi 3b+ x2
+- rPi 3b x4
+
 CNI: Flannel (Weave support is there, but it crashes and reboot's the rPi's, see below)
 
 ## Preparing an SD card
