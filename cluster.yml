@@ -16,6 +16,10 @@ all:
       ansible_host: 192.168.58.63
     node04:
       ansible_host: 192.168.58.64
+    node05:
+      ansible_host: 192.168.58.64
+    node06:
+      ansible_host: 192.168.58.65
   children:
     k8s-master:
       hosts:
@@ -28,6 +32,20 @@ all:
         node02:
         node03:
         node04:
+        node05:
+        node06:
       vars:
         node: "slave"
         master_ip: 192.168.58.60
+    rpi3bp:
+      hosts:
+        node00:
+        node01:
+        node02:
+    rpi3b:
+      hosts:
+        node03:
+        node04:
+        node05:
+        node06:
+

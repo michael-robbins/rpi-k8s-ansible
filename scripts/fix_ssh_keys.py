@@ -13,7 +13,11 @@ args = parser.parse_args()
 
 config = yaml.load(open(args.inventory, "rt"))
 
-remove_cmd = "ssh-keygen -f \"{known_hosts}\" -R {ip}"
+cmds = {
+    "remove": "ssh-keygen -f \"{known_hosts}\" -R {ip}",
+    "add": "ssh-keyscan {ip} >> {known_hosts}",
+}
 
 for host in config["all"]["hosts"].values():
-    os.system(remove_cmd.format(known_hosts=args.known_hosts, ip=host["ansible_host"]))
+    os.system(cmds["remove"].format(known_hosts=args.known_hosts, ip=host["ansible_host"]))
+    os.system(cmds["add"].format(known_hosts=args.known_hosts, ip=host["ansible_host"]))

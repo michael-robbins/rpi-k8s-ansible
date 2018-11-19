@@ -37,13 +37,14 @@ $ cp bootstrap/ssh /mnt/boot/ssh
 Example flash and ssh/wifi:
 sudo umount /media/<user>/boot
 sudo umount /media/<user>/rootfs
-sudo dd if=2018-04-18-raspbian-stretch-lite.img of=/dev/<disk> bs=16M status=progress
+sudo dd if=2018-11-13-raspbian-stretch-lite.img of=/dev/<disk> bs=16M status=progress
 sync
 
 # Unplug/replug SD card
 
-cp wpa_supplicant.conf /media/<user>/boot/
-touch /media/<user>/boot/ssh
+cp bootstrap/wpa_supplicant.conf /media/<user>/boot/
+cp bootstrap/ssh /media/<user>/boot/
+
 sync
 sudo umount /media/<user>/boot
 sudo umount /media/<user>/rootfs
@@ -61,13 +62,16 @@ Update the file as required for your specific setup.
 ansible-playbook -i cluster.yml playbooks/upgrade.yml
 ```
 
-## rpi3b & rpi3bp overclocks
+## rPi Overclocks
+Ensure you update cluster.yml with the correct children mappings for each rpi model
 ```
-# Node 00 is an rpi3b+ for me
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3bp.yml -l node00
+ansible-playbook -i cluster.yml playbooks/overclock-rpis.yml
+```
 
-# The rest of the nodes are all rpi3b's
-ansible-playbook -i cluster.yml playbooks/overclock-rpi3b.yml -l 'all:!node00'
+## Master helper packages
+Install some extra misc helper packages
+```
+ansible-playbook -i cluster.yml playbooks/master-packages.yml
 ```
 
 ## Install k8s
