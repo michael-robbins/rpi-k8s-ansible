@@ -1,11 +1,11 @@
 ---
 - name: Generate a token beforehand
   command: kubeadm token generate
-  register: token_out
+  register: token
 
 - name: Set token
   set_fact:
-    token: "{{ token_out.stdout }}"
+    token: "{{ token.stdout }}"
 
 - name: Init the cluster
   command: kubeadm init --token {{ token }} --apiserver-advertise-address={{ node_ip }} {{ cni_init_extra[cni] }}

@@ -1,4 +1,14 @@
 ---
+- name: Install k8s
+  include_tasks: install.yml
+  tags:
+    - install
+
+- name: Configure OS
+  include_tasks: configure_os.yml
+  tags:
+    - install
+
 - name: Discover node status
   include_tasks: discover.yml
 

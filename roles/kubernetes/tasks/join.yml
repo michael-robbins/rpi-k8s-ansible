@@ -7,4 +7,3 @@
 - name: Print stdout
   debug:
     var: out
-

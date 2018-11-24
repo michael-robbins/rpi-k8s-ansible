@@ -17,9 +17,9 @@ all:
     node04:
       ansible_host: 192.168.58.64
     node05:
-      ansible_host: 192.168.58.64
-    node06:
       ansible_host: 192.168.58.65
+    node06:
+      ansible_host: 192.168.58.66
   children:
     k8s-master:
       hosts:

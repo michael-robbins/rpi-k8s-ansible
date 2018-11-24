@@ -1,4 +1,9 @@
 ---
+k8s_packages:
+- kubeadm
+- kubectl
+- kubelet
+
 reset: false
 cluster: ""
 
