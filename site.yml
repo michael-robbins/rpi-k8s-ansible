@@ -7,4 +7,5 @@
 
 - hosts: all
   roles:
+    - docker
     - kubernetes

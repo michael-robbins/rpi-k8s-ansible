@@ -68,12 +68,6 @@ Ensure you update cluster.yml with the correct children mappings for each rpi mo
 ansible-playbook -i cluster.yml playbooks/overclock-rpis.yml
 ```
 
-## Master helper packages
-Install some extra misc helper packages
-```
-ansible-playbook -i cluster.yml playbooks/master-packages.yml
-```
-
 ## Install k8s
 With the below commands, you need to include the master node (node00) in all executions for the token to be set correctly.
 ```

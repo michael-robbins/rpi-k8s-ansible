@@ -1,7 +1,0 @@
----
-- hosts: k8s-master
-  tasks:
-    - name: Install recommended packages for the master node
-      apt:
-        name: ['vim', 'ack-grep']
-        state: present
