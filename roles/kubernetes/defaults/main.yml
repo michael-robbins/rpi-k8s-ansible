@@ -1,8 +1,15 @@
 ---
+kube_version: "1.13.1-00"
+
 k8s_packages:
-- kubeadm
-- kubectl
-- kubelet
+- "kubeadm"
+- "kubectl"
+- "kubelet"
+
+package_versions:
+  kubeadm: "{{ kube_version }}"
+  kubectl: "{{ kube_version }}"
+  kubelet: "{{ kube_version }}"
 
 reset: false
 cluster: ""

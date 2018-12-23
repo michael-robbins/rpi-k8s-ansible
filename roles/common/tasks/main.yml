@@ -15,6 +15,5 @@
 
 - name: Install common packages
   apt:
-    name: "{{ item }}"
+    name: "{{ common_packages }}"
     state: present
-  with_items: "{{ common_packages }}"

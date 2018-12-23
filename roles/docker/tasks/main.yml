@@ -20,6 +20,16 @@
 
 - name: Install Docker packages
   apt:
-    name: "{{ item }}"
+    name: "{{ item }}={{ package_versions[item] }}"
     state: present
+    force: yes
+  with_items: "{{ docker_packages }}"
+
+- name: Pin Docker packages
+  copy:
+    dest: "/etc/apt/preferences.d/{{ item }}"
+    content: |
+      Package: {{ item }}
+      Pin: version {{ package_versions[item] }}
+      Pin-Priority: 1002
   with_items: "{{ docker_packages }}"

@@ -1,6 +1,6 @@
 ---
 - name: Enable Flannel CNI
-  shell: "curl -sSL https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml | sed 's/amd64/arm/g' | kubectl create -f -"
+  shell: "curl -sSL https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml | kubectl create -f -"
   register: cni_out
 
 - debug: var=cni_out
@@ -13,8 +13,8 @@
   delay: 10
 
 - name: Wait for the DNS pods to stabalize
-  shell: kubectl get pods --namespace=kube-system | grep kube-dns | grep Running | wc -l
+  shell: kubectl get pods --namespace=kube-system | grep coredns | grep Running | wc -l
   register: dns_test
-  until: dns_test.stdout == '1'
+  until: dns_test.stdout == '2'
   retries: 12
   delay: 10
