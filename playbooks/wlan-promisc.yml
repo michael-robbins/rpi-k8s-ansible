@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+    - name: Update rc.local to enable promisc on wlan0 interface
+      lineinfile:
+        path: /etc/rc.local
+        insertbefore: '^exit 0$'
+        line: 'ifconfig wlan0 promisc'
+    - name: Enable promisc on wlan0
+      shell: ifconfig wlan0 promisc
