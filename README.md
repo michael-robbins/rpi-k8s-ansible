@@ -136,8 +136,8 @@ It took around 5 minutes for k8s to detect the node failure and respond by resch
 Currently investigating how we can speed this up.
 ```
 pi@node03:~ $ sudo shutdown -h now
-Connection to 192.168.58.63 closed by remote host.
-Connection to 192.168.58.63 closed.
+Connection to 192.168.60.63 closed by remote host.
+Connection to 192.168.60.63 closed.
 
 pi@node00:~ $ kubectl get pods -o wide
 NAME                                    READY     STATUS    RESTARTS   AGE       IP           NODE

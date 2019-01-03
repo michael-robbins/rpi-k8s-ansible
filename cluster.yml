@@ -7,19 +7,19 @@ all:
     ansible_become_user: root
   hosts:
     node00:
-      ansible_host: 192.168.58.60
+      ansible_host: 192.168.60.60
     node01:
-      ansible_host: 192.168.58.61
+      ansible_host: 192.168.60.61
     node02:
-      ansible_host: 192.168.58.62
+      ansible_host: 192.168.60.62
     node03:
-      ansible_host: 192.168.58.63
+      ansible_host: 192.168.60.63
     node04:
-      ansible_host: 192.168.58.64
+      ansible_host: 192.168.60.64
     node05:
-      ansible_host: 192.168.58.65
+      ansible_host: 192.168.60.65
     node06:
-      ansible_host: 192.168.58.66
+      ansible_host: 192.168.60.66
   children:
     k8s-master:
       hosts:
@@ -36,7 +36,7 @@ all:
         node06:
       vars:
         node: "slave"
-        master_ip: 192.168.58.60
+        master_ip: 192.168.60.60
     rpi3bp:
       hosts:
         node00:
