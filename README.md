@@ -95,6 +95,13 @@ See https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975 for more 
 
 Instead I've decided to move to Flannel, which is working nicely so far.
 
+## Copy over the .kube/config
+This logs into node00 and copies the .kube/config file back into the local users ~/.kube/config file
+Allowing a locally installed kubectl/etc to be able to query the cluster
+```
+ansible-playbook -i cluster.yml playbooks/copy-kube-config.yml
+```
+
 # Running stuff on the cluster!
 ## Example HA web service
 This example will create a, Ingress Controller, Service, Deployment and 5x Nginx pods that will print out the node name they are running on!

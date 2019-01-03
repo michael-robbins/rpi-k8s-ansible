@@ -1,0 +1,14 @@
+---
+- hosts: node00
+  tasks:
+    - name: Create a local .kube directory
+      file:
+        path: ~/.kube
+        state: directory
+        mode: 0700
+
+    - name: Copy .kube/config from node00
+      fetch:
+        src: ~/.kube/config
+        dest: ~/.kube/config
+        flat: yes
