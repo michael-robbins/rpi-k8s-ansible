@@ -8,13 +8,13 @@
 - name: Wait for the Weave CNI pods to stabalize
   shell: kubectl get pods --namespace=kube-system | grep weave-net | grep Running | wc -l
   register: cni_test
-  until: cni_test.stdout == '1'
+  until: cni_test.stdout|int > 0
   retries: 12
   delay: 10
 
 - name: Wait for the DNS pods to stabalize
   shell: kubectl get pods --namespace=kube-system | grep kube-dns | grep Running | wc -l
   register: dns_test
-  until: dns_test.stdout == '1'
+  until: dns_test.stdout|int > 0
   retries: 12
   delay: 10
