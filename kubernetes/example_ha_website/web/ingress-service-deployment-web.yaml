@@ -1,8 +1,8 @@
 ---
 # An Ingress controller proxies traffic between the outside world and a Service
 # This document configures the cluster Ingress controller with the correct proxy configuration
-apiVersion: extensions/v1beta1
 kind: Ingress
+apiVersion: extensions/v1beta1
 metadata:
   name: website
   annotations:
@@ -17,8 +17,8 @@ spec:
           servicePort: 80
 ---
 # A service bridges a set of pods to an external port on the cluster
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
   name: website
 spec:
@@ -32,8 +32,8 @@ spec:
   type: NodePort  # A random high port will be allocated on all cluster nodes to this service
 ---
 # A deployment contains the pod spec and replica config
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
   name: webserver
   labels:

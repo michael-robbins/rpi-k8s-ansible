@@ -1,13 +1,11 @@
 ---
-
-apiVersion: v1
 kind: Namespace
+apiVersion: v1
 metadata:
   name: ingress-nginx
 ---
-
-apiVersion: extensions/v1beta1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
   name: default-http-backend
   labels:
@@ -47,9 +45,8 @@ spec:
             cpu: 10m
             memory: 20Mi
 ---
-
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
   name: default-http-backend
   namespace: ingress-nginx
@@ -62,7 +59,6 @@ spec:
   selector:
     app: default-http-backend
 ---
-
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -71,31 +67,27 @@ metadata:
   labels:
     app: ingress-nginx
 ---
-
 kind: ConfigMap
 apiVersion: v1
 metadata:
   name: tcp-services
   namespace: ingress-nginx
 ---
-
 kind: ConfigMap
 apiVersion: v1
 metadata:
   name: udp-services
   namespace: ingress-nginx
 ---
-
-apiVersion: v1
 kind: ServiceAccount
+apiVersion: v1
 metadata:
   name: nginx-ingress-serviceaccount
   namespace: ingress-nginx
 
 ---
-
-apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx-ingress-clusterrole
 rules:
@@ -145,11 +137,9 @@ rules:
       - ingresses/status
     verbs:
       - update
-
 ---
-
-apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx-ingress-role
   namespace: ingress-nginx
@@ -188,11 +178,9 @@ rules:
       - endpoints
     verbs:
       - get
-
 ---
-
-apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx-ingress-role-nisa-binding
   namespace: ingress-nginx
@@ -204,11 +192,9 @@ subjects:
   - kind: ServiceAccount
     name: nginx-ingress-serviceaccount
     namespace: ingress-nginx
-
 ---
-
-apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx-ingress-clusterrole-nisa-binding
 roleRef:
@@ -220,9 +206,8 @@ subjects:
     name: nginx-ingress-serviceaccount
     namespace: ingress-nginx
 ---
-
-apiVersion: extensions/v1beta1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
   name: nginx-ingress-controller
   namespace: ingress-nginx 
