@@ -1,3 +1,22 @@
+# Kubernetes Dashboard
+```
+# Applies the non-TLS version of kubernetes dashboard for ARM (rpi compatible)
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/alternative/kubernetes-dashboard-arm.yaml
+
+# Overrides the installed ServiceAccount with one with admin credentials
+kubectl apply -f dashboard/admin-rbac.yaml
+
+# Overrides the installed Service with a 'NodePort' service to expose this to the outside
+kubectl apply -f dashboard/endpoint.yaml
+```
+
+You can now navigate to the dashboard from outside your cluster by finding the exposed NodePort high port
+In the below example, the high port is 31648, and visiting the dashboard through: http://node-ip-address:31648/
+```
+$ kubectl get services --all-namespaces | grep kubernetes-dashboard
+kube-system   kubernetes-dashboard   NodePort    10.97.125.254    <none>        80:31648/TCP    10m
+```
+
 # Helm
 A number of the examples below use and require Helm. It can be installed from here: https://github.com/helm/helm/releases
 
