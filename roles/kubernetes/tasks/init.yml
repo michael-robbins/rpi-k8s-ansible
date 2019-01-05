@@ -14,7 +14,11 @@
 - debug: var=init_out
 
 - name: Ensure the .kube dir exists for root
-  file: path=/root/.kube state=directory
+  file:
+    path: /root/.kube
+    state: directory
+    owner: root
+    group: root
 
 - name: Copy in the kubernetes config to the root user
   copy:
@@ -25,7 +29,11 @@
     group: root
 
 - name: Ensure the .kube dir exists for pi
-  file: path=/home/pi/.kube state=directory
+  file:
+    path: /home/pi/.kube
+    state: directory
+    owner: pi
+    group: pi
 
 - name: Copy in the kubernetes config to the pi user
   copy:
