@@ -10,6 +10,7 @@ Workers:
 
 CNI: Flannel (Weave support is there, but it crashes and reboot's the rPi's, see below)
 
+# Preparing to install
 ## Preparing an SD card on Linux
 ```
 # Write the image to the SD card, please use at least 2018-04-18 if you want to use WiFi
@@ -56,13 +57,13 @@ I have not changed any passwords or configured SSH keys as this cannot be easily
 I am currently using DHCP static assignment to ensure each PI's MAC address is given the same IP address.  
 Update the file as required for your specific setup.
 
-# Example Playbooks
+# Install Kubernetes
 ## apt-get upgrade
 ```
 ansible-playbook -i cluster.yml playbooks/upgrade.yml
 ```
 
-## rPi Overclocks
+## rPi Overclocks (optional)
 Ensure you update cluster.yml with the correct children mappings for each rpi model
 ```
 ansible-playbook -i cluster.yml playbooks/overclock-rpis.yml
@@ -98,6 +99,7 @@ Instead I've decided to move to Flannel, which is working nicely so far.
 ## Copy over the .kube/config
 This logs into node00 and copies the .kube/config file back into the local users ~/.kube/config file
 Allowing a locally installed kubectl/etc to be able to query the cluster
+
 ```
 ansible-playbook -i cluster.yml playbooks/copy-kube-config.yml
 ```
