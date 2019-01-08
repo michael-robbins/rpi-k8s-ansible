@@ -7,5 +7,6 @@
 
 - hosts: all
   roles:
+    - nfs
     - docker
     - kubernetes

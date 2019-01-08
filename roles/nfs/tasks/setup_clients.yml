@@ -1,0 +1,29 @@
+- name: Install Client Packages
+  apt:
+    name: "{{ nfs_client_packages }}"
+    state: present
+  tags:
+    - install
+
+- name: Ensure mount directory exists
+  file:
+    path: "{{ client_mount_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+  tags:
+    - configure
+
+- name: Update /etc/fstab
+  lineinfile:
+    path: /etc/fstab
+    insertafter: EOF
+    line: "{{ server_ip }}:{{ server_mount_dir }}   {{ client_mount_dir }}   nfs    rw  0  0"
+  tags:
+    - configure
+
+- name: Mount the above entry
+  shell: mount -a
+  tags:
+    - configure

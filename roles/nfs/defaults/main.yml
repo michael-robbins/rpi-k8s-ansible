@@ -1,0 +1,10 @@
+---
+nfs_server_packages:
+- "nfs-common"
+- "nfs-kernel-server"
+
+nfs_client_packages:
+- "nfs-common"
+
+server_mount_dir: "/mnt/kube_default_pv"
+client_mount_dir: "/mnt/kube_default_pv"
