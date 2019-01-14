@@ -48,10 +48,10 @@ Note: The above 'helm init' command is pinned to v2.12.1 as per the above helm d
 A good example of a multiarch docker image build is https://github.com/jessestuart/tiller-multiarch/blob/master/.circleci/config.yml
 
 ## Setting up a Persistent Volume (PV)
+We apply a PV for our NFS share we setup as part of the Ansible bootstrap, it needs to match the PVC request configuration for the PVC to be successful.
+The below nfs-pv-mariadb.yaml applies a ReadWriteOnce PV with 8GB space, matching the expected PVC response.
 ```
-# Apply the PV for our NFS share we setup as part of the Ansible bootstrap
-# The below nfs-pv-mariadb.yaml applies a ReadWriteOnce PV with 8GB space, this matches the PVC request the below MariaDB Helm Chart creates
-# You need a matching PV for each PVC otherwise it will sit in 'Pending' and wait until a PV becomes available
+# Apply the MariaDB specific PV
 kubectl apply -f pv/nfs-pv-mariadb.yaml
 ```
 
