@@ -111,4 +111,7 @@ You can look in the README.md in the kubernetes subfolder to see a few examples 
 ```
 # Shutdown all nodes
 ansible -i cluster.yml -a "shutdown -h now" all
+
+# Ensure NFS mount is active across cluster
+ansible -i cluster.yml -a "mount -a" all
 ```

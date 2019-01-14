@@ -47,26 +47,40 @@ Note: The above 'helm init' command is pinned to v2.12.1 as per the above helm d
 
 A good example of a multiarch docker image build is https://github.com/jessestuart/tiller-multiarch/blob/master/.circleci/config.yml
 
+## Setting up a Persistent Volume (PV)
+```
+# Apply the PV for our NFS share we setup as part of the Ansible bootstrap
+# The below nfs-pv-mariadb.yaml applies a ReadWriteOnce PV with 8GB space, this matches the PVC request the below MariaDB Helm Chart creates
+# You need a matching PV for each PVC otherwise it will sit in 'Pending' and wait until a PV becomes available
+kubectl apply -f pv/nfs-pv-mariadb.yaml
+```
+
 ## Installing Helm charts
 Helm charts don't generally work with arm unless they have multiarch support in the images (you'll need to verify this beforehand).
 
 Here's a list of arm chart repo's you can add into Helm to mess with:
 * https://github.com/peterhuene/arm-charts
 
-This is an example mysql install (ripped straight from the quickstart guide https://docs.helm.sh/using\_helm/#quickstart-guide)
+```
+# Install arm-charts as 'arm-stable'
+helm repo add arm-stable https://peterhuene.github.io/arm-charts/stable
+```
+
+This is an example mariadb install
 
 ```
-$ helm install stable/mysql
-$ helm inspect stable/mysql
+$ helm install arm-stable/mariadb
+$ helm inspect arm-stable/mariadb
 
-$ kubectl get secret --namespace default <release-name> -o jsonpath="{.data.mysql-root-password}" | base64 --decode; echo
+$ kubectl get secret --namespace default <release-name> -o jsonpath="{.data.mariadb-root-password}" | base64 --decode; echo
 
 $ helm ls
-NAME                    REVISION        UPDATED                         STATUS          CHART           APP VERSION
-        NAMESPACE
-exacerbated-eagle       1               Fri Jan  4 23:35:26 2019        DEPLOYED        mysql-0.12.0    5.7.14
-        default
+NAME            REVISION        UPDATED                         STATUS          CHART           APP VERSION     NAMESPACE
+knobby-quokka   1               Tue Jan 15 00:08:24 2019        DEPLOYED        mariadb-0.1.0   10.1.22         default
 
+$ kubectl get pods
+NAME                                    READY   STATUS    RESTARTS   AGE
+knobby-quokka-mariadb-c76c6dbf4-n7qnz   1/1     Running   1          5m11s
 ```
 
 # Example HA Web service

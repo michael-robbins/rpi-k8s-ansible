@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nfs-pv-mariadb
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/kube_default_pv
+    server: 192.168.60.60
+    readOnly: false
