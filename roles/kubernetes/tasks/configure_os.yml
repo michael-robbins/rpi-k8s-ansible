@@ -11,7 +11,7 @@
     dphys-swapfile swapoff
     dphys-swapfile uninstall
     update-rc.d dphys-swapfile remove
-  when: swap_enabled
+  when: swap_enabled | bool
 
 - name: Enable memory cgroup
   lineinfile:

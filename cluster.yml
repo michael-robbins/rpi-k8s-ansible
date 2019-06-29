@@ -21,12 +21,12 @@ all:
     node06:
       ansible_host: 192.168.60.66
   children:
-    k8s-master:
+    k8s_master:
       hosts:
         node00:
       vars:
         node: "master"
-    k8s-slaves:
+    k8s_slaves:
       hosts:
         node01:
         node02:
