@@ -5,8 +5,8 @@
       shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;
     - name: apt-get update && apt-get upgrade
       apt:
-        upgrade: yes
-        update_cache: yes
+        upgrade: "yes"
+        update_cache: "yes"
         cache_valid_time: 0
     - name: Reboot host
       shell: sleep 2 && /sbin/shutdown -r now "Ansible reboot"
