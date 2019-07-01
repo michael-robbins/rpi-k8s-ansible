@@ -1,6 +1,7 @@
 ---
 - name: Enable Flannel CNI
   shell: "curl -sSL https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml | kubectl create -f -"
+  args:
     warn: false
   register: cni_out
 
