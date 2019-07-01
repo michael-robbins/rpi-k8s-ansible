@@ -28,7 +28,10 @@
     token: "{{ hostvars['node00'].token }}"  # Need to be set after discovery/init
 
 - debug: var=node_ip
-- debug: var=master_ip
+- debug:
+    var: master_ip
+  when:
+    - node == "slave"
 - debug: var=token
 
 - name: Join the cluster
