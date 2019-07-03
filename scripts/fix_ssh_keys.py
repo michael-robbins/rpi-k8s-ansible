@@ -11,7 +11,7 @@ parser.add_argument("--inventory", required=True, help="Ansible inventory file")
 parser.add_argument("--known-hosts", default=os.path.join(Path.home(), ".ssh", "known_hosts"), help=".ssh known_hosts file path")
 args = parser.parse_args()
 
-config = yaml.load(open(args.inventory, "rt"))
+config = yaml.safe_load(open(args.inventory, "rt"))
 
 cmds = {
     "remove": "ssh-keygen -f \"{known_hosts}\" -R {ip}",
