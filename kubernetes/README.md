@@ -21,16 +21,20 @@ kube-system   kubernetes-dashboard   NodePort    10.97.125.254    <none>        
 A number of the examples below use and require Helm. It can be installed from here: https://github.com/helm/helm/releases
 
 ## Installing the helm binary
-This is for an amd64 CPU, the ansible bootstrapping here will configure your ~/.kube/config file that allows cluster access!
+The ansible bootstrapping here will configure your ~/.kube/config file that allows cluster access!
 If you're downloading onto the rpi directly to run, you'll need to compile it yourself or find a prebuilt ARMv7 binary.
 See https://github.com/peterhuene/arm-charts/blob/master/README.md for context around building this yourself.
 
 ```
-wget https://storage.googleapis.com/kubernetes-helm/helm-v2.12.1-linux-amd64.tar.gz
-unzip helm-v2.12.1-linux-amd64.tar.gz
+# Linux amd64
+wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.1-linux-amd64.tar.gz
+tar xzf helm-v2.14.1-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin/
 sudo mv linux-amd64/tiller /usr/local/bin/
 rm -rf linux-amd64
+
+# Mac amd64
+brew install kubernetes-helm
 ```
 
 ## Installing helm onto the cluster
