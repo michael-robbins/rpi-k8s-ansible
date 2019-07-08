@@ -1,9 +1,13 @@
 # Kubernetes Dashboard
 ```
-# Applies the non-TLS version of kubernetes dashboard for ARM (rpi compatible)
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/alternative/kubernetes-dashboard-arm.yaml
+# Non TLS version
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/alternative.yaml
+
+# TLS version (requires a few extra steps, check https://github.com/kubernetes/dashboard)
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
 
 # Overrides the installed ServiceAccount with one with admin credentials
+kubectl delete -f dashboard/admin-rbac.yaml
 kubectl apply -f dashboard/admin-rbac.yaml
 
 # Overrides the installed Service with a 'NodePort' service to expose this to the outside
@@ -21,6 +25,7 @@ kube-system   kubernetes-dashboard   NodePort    10.97.125.254    <none>        
 A number of the examples below use and require Helm. It can be installed from here: https://github.com/helm/helm/releases
 
 ## Installing the helm binary
+
 The ansible bootstrapping here will configure your ~/.kube/config file that allows cluster access!
 If you're downloading onto the rpi directly to run, you'll need to compile it yourself or find a prebuilt ARMv7 binary.
 See https://github.com/peterhuene/arm-charts/blob/master/README.md for context around building this yourself.
