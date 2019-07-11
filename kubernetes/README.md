@@ -63,11 +63,17 @@ The below nfs-pv-mariadb.yaml applies a ReadWriteOnce PV with 8GB space, matchin
 kubectl apply -f pv/nfs-pv-mariadb.yaml
 ```
 
+## Setting up Dynamic Persistent Volumes through NFS
+```
+# TODO: https://github.com/helm/charts/tree/master/stable/nfs-client-provisioner
+
+```
+
 ## Installing Helm charts
 Helm charts don't generally work with arm unless they have multiarch support in the images (you'll need to verify this beforehand).
 
 Here's a list of arm chart repo's you can add into Helm to mess with:
-* https://github.com/peterhuene/arm-charts
+* https://github.com/peterhuene/arm-charts (just contains MariaDB)
 
 ```
 # Install arm-charts as 'arm-stable'
