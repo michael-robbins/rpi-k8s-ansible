@@ -115,3 +115,81 @@ ansible -i cluster.yml -a "shutdown -h now" all
 # Ensure NFS mount is active across cluster
 ansible -i cluster.yml -a "mount -a" all
 ```
+
+# Upgrading your cluster
+First you need to upgrade the control plane (node00).
+The below example is an upgrade from v1.15.0 -> v1.15.1
+
+## Install the target kubeadm
+```
+sudo apt-get install kubeadm=1.15.1-00
+```
+
+## Plan the upgrade
+```
+sudo kubeadm upgrade plan
+[upgrade/config] Making sure the configuration is correct:
+[upgrade/config] Reading configuration from the cluster...
+[upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
+[preflight] Running pre-flight checks.
+[upgrade] Making sure the cluster is healthy:
+[upgrade] Fetching available versions to upgrade to
+[upgrade/versions] Cluster version: v1.15.0
+[upgrade/versions] kubeadm version: v1.15.1
+[upgrade/versions] Latest stable version: v1.15.1
+[upgrade/versions] Latest version in the v1.15 series: v1.15.1
+
+Components that must be upgraded manually after you have upgraded the control plane with 'kubeadm upgrade apply':
+COMPONENT   CURRENT       AVAILABLE
+Kubelet     7 x v1.15.0   v1.15.1
+
+Upgrade to the latest version in the v1.15 series:
+
+COMPONENT            CURRENT   AVAILABLE
+API Server           v1.15.0   v1.15.1
+Controller Manager   v1.15.0   v1.15.1
+Scheduler            v1.15.0   v1.15.1
+Kube Proxy           v1.15.0   v1.15.1
+CoreDNS              1.3.1     1.3.1
+Etcd                 3.3.10    3.3.10
+
+You can now apply the upgrade by executing the following command:
+
+	kubeadm upgrade apply v1.15.1
+
+_____________________________________________________________________
+```
+
+## Apply the upgrade
+```
+sudo kubeadm upgrade apply v1.15.1
+[upgrade/config] Making sure the configuration is correct:
+[upgrade/config] Reading configuration from the cluster...
+[upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
+[preflight] Running pre-flight checks.
+[upgrade] Making sure the cluster is healthy:
+[upgrade/version] You have chosen to change the cluster version to "v1.15.1"
+[upgrade/versions] Cluster version: v1.15.0
+[upgrade/versions] kubeadm version: v1.15.1
+[upgrade/confirm] Are you sure you want to proceed with the upgrade? [y/N]: y
+
+...
+
+[upgrade/successful] SUCCESS! Your cluster was upgraded to "v1.15.1". Enjoy!
+
+[upgrade/kubelet] Now that your control plane is upgraded, please proceed with upgrading your kubelets if you haven't already done so.
+```
+
+## Update kube_version
+```
+cat roles/kubernetes/defaults/main.yml
+---
+kube_version: "1.15.1-00"
+
+<snip>
+```
+
+## Upgrade the kubeXYZ tooling
+```
+ansible-playbook -i cluster.yml site.yml --tags upgrade,kubernetes
+```

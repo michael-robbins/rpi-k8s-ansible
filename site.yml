@@ -9,4 +9,11 @@
   roles:
     - nfs
     - docker
+  tags:
+    - supporting
+
+- hosts: all
+  roles:
+    - kubernetes
+  tags:
     - kubernetes

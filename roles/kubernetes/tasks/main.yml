@@ -3,6 +3,7 @@
   include_tasks: install.yml
   tags:
     - install
+    - upgrade
 
 - name: Configure OS
   include_tasks: configure_os.yml
