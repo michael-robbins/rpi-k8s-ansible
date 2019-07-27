@@ -1,10 +1,10 @@
 # Kubernetes Dashboard
 ```
 # Non TLS version
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/alternative.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta2/aio/deploy/alternative.yaml
 
 # TLS version (requires a few extra steps, check https://github.com/kubernetes/dashboard)
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta2/aio/deploy/recommended.yaml
 
 # Overrides the installed ServiceAccount with one with admin credentials
 kubectl delete -f dashboard/admin-rbac.yaml
