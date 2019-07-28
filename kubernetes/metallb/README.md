@@ -10,7 +10,7 @@ ansible-playbook -i cluster.yml playbooks/wlan-promisc.yml
 
 # Apply the configs
 
-kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+kubectl apply -f https://raw.githubusercontent.com/danderson/metallb/v0.8.1/manifests/metallb.yaml
 kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/kubernetes/metallb/layer2-config.yaml
 kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/kubernetes/metallb/nginx-lb.yaml
 ```
