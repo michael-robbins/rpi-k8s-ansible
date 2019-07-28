@@ -64,6 +64,8 @@ kubectl apply -f pv/nfs-pv-mariadb.yaml
 ```
 
 ## Setting up Dynamic Persistent Volumes through NFS
+Followed https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client
+
 ### Clone the repo
 ```
 git clone https://github.com/kubernetes-incubator/external-storage.git
@@ -127,6 +129,7 @@ kubectl create -f deploy/class.yaml
 ```
 
 ### Test the dynamic PV with a PVC & Pod
+Ensure you update below to support rpi's
 ```
 git diff deploy/test-pod.yaml
 diff --git a/nfs-client/deploy/test-pod.yaml b/nfs-client/deploy/test-pod.yaml
@@ -172,10 +175,10 @@ total 0
 kubectl delete -f deploy/test-claim.yaml -f deploy/test-pod.yaml
 
 # Verify the PVC & PV are both deleted in the Dashboard OR on the CLI
-$ kubectl get pv
+$ kubectl get pvc
 No resources found.
 
-$ kubectl get pvc
+$ kubectl get pv
 No resources found.
 ```
 
