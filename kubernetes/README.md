@@ -210,6 +210,32 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 knobby-quokka-mariadb-c76c6dbf4-n7qnz   1/1     Running   1          5m11s
 ```
 
+# Installing Istio
+WARNING: Istio currently doesn't have any ARM images available
+
+## Download and unzip istio
+```
+cd istio
+wget https://github.com/istio/istio/releases/download/1.2.2/istio-1.2.2-linux.tar.gz
+tar xzf istio-1.2.2-linux.tar.gz
+cd istio-1.2.2
+```
+
+## Install istio
+```
+pushd install/kubernetes/helm/istio-init/files/
+for i in *.yaml; do kubectl apply -f $i; done
+popd
+
+# The below should return a bunch of stuff
+kubectl get crd
+
+# Apply permissive demo
+pushd install/kubernetes/
+kubectl apply -f istio-demo.yaml
+popd
+```
+
 # Example HA Web service
 This example will create a, Ingress Controller, Service, Deployment and 5x Nginx pods that will print out the node name they are running on!
 

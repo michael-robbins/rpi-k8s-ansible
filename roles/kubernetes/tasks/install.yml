@@ -1,31 +1,31 @@
 ---
-- name: Ensure apt https exists
+- name: ensure apt https exists
   package:
     name: apt-transport-https
     state: present
 
-- name: Add in k8s apt repo key
+- name: add in k8s apt repo key
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
 
-- name: Add in k8s apt repo
+- name: add in k8s apt repo
   apt_repository:
     repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
     state: present
 
-- name: Update apt repos
+- name: update apt repos
   apt:
     update_cache: yes
 
-- name: Install k8s packages
+- name: install k8s packages
   apt:
     name: "{{ item }}={{ package_versions[item] }}"
     state: present
     force: yes
   with_items: "{{ k8s_packages }}"
 
-- name: Pin k8s packages
+- name: pin k8s packages
   copy:
     dest: "/etc/apt/preferences.d/{{ item }}"
     content: |

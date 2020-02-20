@@ -1,11 +1,11 @@
-- name: Install Client Packages
+- name: install Client Packages
   apt:
     name: "{{ nfs_client_packages }}"
     state: present
   tags:
     - install
 
-- name: Ensure mount directory exists
+- name: ensure mount directory exists
   file:
     path: "{{ client_mount_dir }}"
     state: directory
@@ -15,7 +15,7 @@
   tags:
     - configure
 
-- name: Mount the server dir
+- name: mount the server dir
   mount:
     path: "{{ client_mount_dir }}"
     src: "{{ master_ip }}:{{ server_mount_dir }}"

@@ -1,5 +1,5 @@
 ---
-- name: Check the cluster membership
+- name: check the cluster membership
   stat:
     path: /etc/kubernetes/admin.conf
   register: st
@@ -13,7 +13,7 @@
     - st.stat.exists
     - reset != true
 
-- name: Check the cluster membership
+- name: check the cluster membership
   stat:
     path: /etc/kubernetes/kubelet.conf
   register: st
@@ -26,15 +26,15 @@
     - node == "slave"
     - st.stat.exists
 
-- name: Get the IP address of the node
+- name: get the IP address of the node
   shell: ifconfig wlan0 | grep 'inet ' | awk '{print $2}'
   register: ipaddress_out
 
-- name: Set the node_ip
+- name: set the node_ip
   set_fact:
     node_ip: "{{ ipaddress_out.stdout }}"
 
-- name: Wait up to 2 minutes for the k8s API server to come up
+- name: wait up to 2 minutes for the k8s API server to come up
   shell: kubeadm token list
   register: api_test
   when:
@@ -44,14 +44,14 @@
   retries: 12
   delay: 10
 
-- name: Get the current token
+- name: get the current token
   shell: kubeadm token list | grep 'authentication,signing' | awk '{print $1}' | head -n1
   register: token_out
   when:
     - node == "master"
     - cluster == "initialized"
 
-- name: Set the current token
+- name: set the current token
   set_fact:
     token: "{{ token_out.stdout }}"
   when:
@@ -59,7 +59,7 @@
     - cluster == "initialized"
     - token_out is defined
 
-- name: Generate a new token if there isn't one
+- name: generate a new token if there isn't one
   shell: kubeadm token create
   register: token_out
   when:
@@ -67,7 +67,7 @@
     - cluster == "initialized"
     - token is not defined
 
-- name: Set the current token
+- name: set the current token
   set_fact:
     token: "{{ token_out.stdout }}"
   when:

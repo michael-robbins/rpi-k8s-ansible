@@ -1,18 +1,18 @@
 ---
-- name: Enable Weave CNI
+- name: enable Weave CNI
   shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
   register: cni_out
 
 - debug: var=cni_out
 
-- name: Wait for the Weave CNI pods to stabalize
+- name: wait for the Weave CNI pods to stabalize
   shell: kubectl get pods --namespace=kube-system | grep weave-net | grep Running | wc -l
   register: cni_test
   until: cni_test.stdout|int > 0
   retries: 12
   delay: 10
 
-- name: Wait for the DNS pods to stabalize
+- name: wait for the DNS pods to stabalize
   shell: kubectl get pods --namespace=kube-system | grep kube-dns | grep Running | wc -l
   register: dns_test
   until: dns_test.stdout|int > 0

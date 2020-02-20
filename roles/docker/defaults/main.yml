@@ -1,5 +1,5 @@
 ---
-docker_version: "18.06.3~ce~3-0~raspbian"
+docker_version: "19.03.6~3-0~raspbian"
 
 docker_packages:
 - "docker-ce"

@@ -1,31 +1,31 @@
 ---
-- name: Ensure apt https exists
+- name: ensure apt https exists
   package:
     name: apt-transport-https
     state: present
 
-- name: Add in docker apt repo key
+- name: add in docker apt repo key
   apt_key:
     url: https://download.docker.com/linux/raspbian/gpg
     state: present
 
-- name: Add in docker apt repo
+- name: add in docker apt repo
   apt_repository:
-    repo: deb [arch=armhf] https://download.docker.com/linux/raspbian stretch stable
+    repo: deb [arch=armhf] https://download.docker.com/linux/raspbian buster stable
     state: present
 
-- name: Update apt repos
+- name: update apt repos
   apt:
     update_cache: yes
 
-- name: Install Docker packages
+- name: install Docker packages
   apt:
     name: "{{ item }}={{ package_versions[item] }}"
     state: present
     force: yes
   with_items: "{{ docker_packages }}"
 
-- name: Pin Docker packages
+- name: pin Docker packages
   copy:
     dest: "/etc/apt/preferences.d/{{ item }}"
     content: |
@@ -34,7 +34,7 @@
       Pin-Priority: 1002
   with_items: "{{ docker_packages }}"
 
-- name: Apply daemon config
+- name: apply daemon config
   copy:
     dest: "/etc/docker/daemon.json"
     content: |
@@ -49,7 +49,7 @@
   notify:
     - restart docker
 
-- name: Create docker daemon service dir
+- name: create docker daemon service dir
   file:
     path: "/etc/systemd/system/docker.service.d"
     state: directory

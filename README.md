@@ -8,13 +8,13 @@ Workers:
 - rPi 3b+ x2
 - rPi 3b x4
 
-CNI: Flannel (Weave support is there, but it crashes and reboot's the rPi's, see below)
+CNI: Weave (Flannel is dead, last commits 1+ years ago)
 
 # Preparing to install
 ## Preparing an SD card on Linux
 ```
-# Write the image to the SD card, please use at least 2018-04-18 if you want to use WiFi
-$ sudo dd if=YYYY-MM-DD-raspbian-stretch-lite.img of=/dev/sdX bs=16M status=progress
+# Write the image to the SD card, please use at least 2020-02-13 if you want to use WiFi
+$ sudo dd if=YYYY-MM-DD-raspbian-buster-lite.img of=/dev/sdX bs=16M status=progress
 
 # Provision wifi settings on first boot
 $ cat bootstrap/wpa_supplicant.conf
@@ -38,7 +38,7 @@ $ cp bootstrap/ssh /mnt/boot/ssh
 Example flash and ssh/wifi:
 sudo umount /media/<user>/boot
 sudo umount /media/<user>/rootfs
-sudo dd if=2018-11-13-raspbian-stretch-lite.img of=/dev/<disk> bs=16M status=progress
+sudo dd if=2020-02-13-raspbian-stretch-lite.img of=/dev/<disk> bs=16M status=progress
 sync
 
 # Unplug/replug SD card
@@ -81,20 +81,6 @@ ansible-playbook -i cluster.yml site.yml -l node00,node05
 # When running again, feel free to ignore the common tag as this will reboot the rpi's
 ansible-playbook -i cluster.yml site.yml --skip-tags common
 ```
-
-Using Weave as the k8s CNI resulted in quite a few kernel oops and the rPi's rebooting:
-```
-pi@node00:~ $ kubectl nodes get
- kernel:[  152.913108] Internal error: Oops: 80000007 [#1] SMP ARM
- kernel:[  152.928828] Process weaver (pid: 4515, stack limit = 0x90266210)
- kernel:[  152.929514] Stack: (0x902679f0 to 0x90268000)
- kernel:[  152.930180] 79e0:                                     00000000 00000000 3d3aa8c0 90267a88
- kernel:[  152.931470] 7a00: 0000801a 0000cbb6 a8b538d0 a8b53898 90267d2c 7f75ead0 00000001 90267a5c
-```
-
-See https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975 for more discussion.
-
-Instead I've decided to move to Flannel, which is working nicely so far.
 
 ## Copy over the .kube/config
 This logs into node00 and copies the .kube/config file back into the local users ~/.kube/config file

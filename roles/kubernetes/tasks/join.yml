@@ -1,9 +1,9 @@
 ---
 # Once https://github.com/kubernetes/kubeadm/issues/659 is resolved we can drop the unsafe flag and get/use the hash
-- name: Join the cluster
+- name: join the cluster
   command: kubeadm join --token {{ token }} {{ master_ip }}:{{ master_port }} --discovery-token-unsafe-skip-ca-verification
   register: out
 
-- name: Print stdout
+- name: print stdout
   debug:
     var: out

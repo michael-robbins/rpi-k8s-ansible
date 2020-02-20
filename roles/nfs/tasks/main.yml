@@ -1,10 +1,10 @@
 ---
-- name: Setup Server
+- name: setup Server
   include_tasks: setup_server.yml
   when:
     node == "master"
 
-- name: Setup Clients
+- name: setup Clients
   include_tasks: setup_clients.yml
   when:
     node == "slave"
