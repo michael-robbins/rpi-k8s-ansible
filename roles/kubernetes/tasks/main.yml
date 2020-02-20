@@ -24,10 +24,6 @@
   tags:
     - init
 
-- name: set the master information
-  set_fact:
-    token: "{{ hostvars['node00'].token }}"  # Need to be set after discovery/init
-
 - debug: var=node_ip
 - debug:
     var: master_ip
@@ -35,13 +31,21 @@
     - node == "slave"
 - debug: var=token
 
+- name: generate short-lived join token
+  include_tasks: join_token.yml
+  when:
+    - node == "master"
+
+- name: set token from master node
+  set_fact:
+    join_cmd: "{{ hostvars['node00'].join_cmd }}"
+
 - name: join the cluster
   include_tasks: join.yml
   when:
     - node == "slave"
     - cluster != "joined"
-    - token is defined and token != ""
-    - master_ip is defined and master_ip != ""
+    - join_cmd is defined and join_cmd != ""
   tags:
     - join
 
