@@ -2,16 +2,12 @@
   shell: cat /proc/swaps | wc -l
   register: swap_out
 
-- name: register swap status
-  set_fact:
-    swap_enabled: swap_out.stdout != "1"
-
 - name: disable swap if enabled
   shell: |
     dphys-swapfile swapoff
     dphys-swapfile uninstall
     systemctl disable dphys-swapfile
-  when: swap_enabled | bool
+  when: swap_out.stdout != "1"
 
 - name: enable memory cgroup
   lineinfile:
