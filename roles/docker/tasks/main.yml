@@ -18,6 +18,15 @@
   apt:
     update_cache: yes
 
+# https://github.com/raspberrypi/linux/issues/3021#issuecomment-568237926
+- name: ignore aufs-tools
+  copy:
+    dest: "/etc/apt/preferences.d/aufs-tools"
+    content: |
+      Package: aufs-tools
+      Pin: version *
+      Pin-Priority: -1
+
 - name: install Docker packages
   apt:
     name: "{{ item }}={{ package_versions[item] }}"
