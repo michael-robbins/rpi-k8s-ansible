@@ -1,2 +1,4 @@
 *.retry
 *.swp
+
+bootstrap/wpa_supplicant.conf
