@@ -38,7 +38,9 @@
 
 - name: set token from master node
   set_fact:
-    join_cmd: "{{ hostvars['node00'].join_cmd }}"
+    join_cmd: "{{ hostvars['node00']['join_cmd'] }}"
+  when:
+    - node == "slave"
 
 - name: join the cluster
   include_tasks: join.yml

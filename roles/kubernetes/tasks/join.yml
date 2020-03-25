@@ -1,7 +1,7 @@
 ---
 # Once https://github.com/kubernetes/kubeadm/issues/659 is resolved we can drop the unsafe flag and get/use the hash
 - name: join the cluster
-  command: {{ join_cmd }}
+  command: "{{ join_cmd }}"
   register: out
 
 - name: print stdout
