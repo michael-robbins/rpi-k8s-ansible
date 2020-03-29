@@ -16,6 +16,19 @@
     line: 'cgroup_enable=memory cgroup_memory=1 dwc\1'
     backrefs: yes
 
+# https://github.com/kubernetes/kubernetes/issues/71305#issuecomment-509394152
+- name: use iptables-legacy
+  alternatives:
+    name: '{{ item.name }}'
+    path: '{{ item.path }}'
+  loop:
+    - name: iptables
+      path: /usr/sbin/iptables-legacy
+    - name: ip6tables
+      path: /usr/sbin/ip6tables-legacy
+    - name: ebtables
+      path: /usr/sbin/ebtables-legacy
+
 - name: reboot host
   shell: sleep 2 && /sbin/shutdown -r now "Ansible reboot"
   async: 1
