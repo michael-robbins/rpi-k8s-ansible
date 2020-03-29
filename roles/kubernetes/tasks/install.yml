@@ -7,12 +7,11 @@
 - name: add in k8s apt repo key
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    state: present
 
 - name: add in k8s apt repo
   apt_repository:
     repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
-    state: present
+    update_cache: no
 
 - name: update apt repos
   apt:

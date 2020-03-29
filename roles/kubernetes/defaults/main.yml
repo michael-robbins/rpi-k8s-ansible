@@ -1,5 +1,5 @@
 ---
-kube_version: "1.17.4-00"
+kube_version: "1.18.0-00"
 
 k8s_packages:
 - "kubeadm"
@@ -16,8 +16,10 @@ cluster: ""
 
 master_port: 6443
 
+pod_network_cidr: "10.244.0.0/16"
+
 cni: "weave"
 
 cni_init_extra:
-  flannel: "--pod-network-cidr=10.244.0.0/16"
-  weave: ""
+  flannel: "--pod-network-cidr={{ pod_network_cidr }}"
+  weave: "--pod-network-cidr={{ pod_network_cidr }}"
