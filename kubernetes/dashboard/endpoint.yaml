@@ -6,10 +6,9 @@ metadata:
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
 spec:
+  type: NodePort  # <-- Extra line to expose to public
+  ports:
+    - port: 80
+      targetPort: 9090
   selector:
     k8s-app: kubernetes-dashboard
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 9090
-  type: NodePort  # <-- Extra line to expose to public

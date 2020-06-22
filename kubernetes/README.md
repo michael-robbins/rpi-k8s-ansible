@@ -11,6 +11,7 @@ kubectl delete -f dashboard/admin-rbac.yaml
 kubectl apply -f dashboard/admin-rbac.yaml
 
 # Overrides the installed Service with a 'NodePort' service to expose this to the outside
+kubectl delete -f dashboard/endpoint.yaml
 kubectl apply -f dashboard/endpoint.yaml
 ```
 
