@@ -9,17 +9,22 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.2/a
 # Overrides the installed ServiceAccount with one with admin credentials
 kubectl delete -f dashboard/admin-rbac.yaml
 kubectl apply -f dashboard/admin-rbac.yaml
-
-# Overrides the installed Service with a 'NodePort' service to expose this to the outside
-kubectl delete -f dashboard/endpoint.yaml
-kubectl apply -f dashboard/endpoint.yaml
 ```
 
-You can now navigate to the dashboard from outside your cluster by finding the exposed NodePort high port
-In the below example, the high port is 31648, and visiting the dashboard through: http://node-ip-address:31648/
+You will now need to get the 'kubernetes-dashboard' service accounts token. This will let you login to the cluster.
 ```
-$ kubectl get services --all-namespaces | grep kubernetes-dashboard
-kube-system   kubernetes-dashboard   NodePort    10.97.125.254    <none>        80:31648/TCP    10m
+kubectl get secrets -n kubernetes-dashboard -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='kubernetes-dashboard')].data.token}" | base64 --decode; echo
+```
+
+Proxy the dashboard to your local computer and login with the above token
+```
+kubectl proxy
+
+# Non TLS version
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+
+# TLS version
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 ```
 
 # Helm
