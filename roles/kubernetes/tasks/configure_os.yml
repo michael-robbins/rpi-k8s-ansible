@@ -15,11 +15,13 @@
     regexp: '^(.*) rootwait$'
     line: '\1 rootwait cgroup_enable=memory cgroup_memory=1'
     backrefs: yes
+  register: cmdline_modified
 
 - name: reboot host
   ansible.builtin.shell: sleep 2 && /sbin/shutdown -r now "Ansible reboot"
   async: 1
   poll: 0
+  when: cmdline_modified.changed
 
 - name: wait for host to come back up
   become: false
@@ -27,3 +29,4 @@
     delay: 15
     sleep: 2
     timeout: 120
+  when: cmdline_modified.changed
