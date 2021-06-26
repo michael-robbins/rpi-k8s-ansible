@@ -1,14 +1,17 @@
 ---
-- name: generate a token beforehand
+- name: pull container images first
+  command: kubeadm config images pull
+
+- name: generate a token before init
   command: kubeadm token generate
   register: init_token
 
-- name: set token
+- name: set token fact
   set_fact:
     init_token: "{{ init_token.stdout }}"
 
 - name: init the cluster
-  command: kubeadm init --token {{ init_token }} --apiserver-advertise-address={{ node_ip }} {{ cni_init_extra[cni] }}
+  command: kubeadm init --token {{ init_token }} --apiserver-advertise-address={{ node_ip }} {{ cni_init_extra[cni] }} --ignore-preflight-errors=Mem
   register: init_out
 
 - debug: var=init_out

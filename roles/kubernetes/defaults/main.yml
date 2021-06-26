@@ -1,5 +1,5 @@
 ---
-kube_version: "1.18.4-00"
+kube_version: "1.21.2-00"
 
 k8s_packages:
 - "kubeadm"

@@ -1,34 +1,39 @@
 ---
-- name: ensure apt https exists
-  package:
-    name: apt-transport-https
+# Following https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+- name: kubernetes required packages
+  ansible.builtin.package:
+    name: "{{ item }}"
     state: present
+  loop:
+    - "apt-transport-https"
+    - "ca-certificates"
+    - "curl"
 
 - name: add in k8s apt repo key
-  apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  ansible.builtin.apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 
 - name: add in k8s apt repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
-    update_cache: no
-
-- name: update apt repos
-  apt:
     update_cache: yes
 
 - name: install k8s packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ item }}={{ package_versions[item] }}"
     state: present
     force: yes
   with_items: "{{ k8s_packages }}"
 
 - name: pin k8s packages
-  copy:
+  ansible.builtin.copy:
     dest: "/etc/apt/preferences.d/{{ item }}"
     content: |
       Package: {{ item }}
       Pin: version {{ package_versions[item] }}
       Pin-Priority: 1002
   with_items: "{{ k8s_packages }}"
+
+# We don't have to configure kubelet's cgroup driver
+# As of 1.21 it defaults to 'systemd' if not configured
+# https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/#configuring-the-kubelet-cgroup-driver

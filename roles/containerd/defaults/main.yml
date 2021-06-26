@@ -1,0 +1,8 @@
+---
+containerd_version: "1.4.6-1"
+
+containerd_packages:
+- "containerd.io"
+
+package_versions:
+  containerd.io: "{{ containerd_version }}"

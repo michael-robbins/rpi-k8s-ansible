@@ -8,13 +8,20 @@ Workers:
 - rPi 3b+ x2
 - rPi 3b x4
 
-CNI: Weave (Flannel is dead, last commits 1+ years ago)
+CNI:
+- Weave (default)
+- Flannel
 
 # Preparing to install
 ## Preparing an SD card on Linux
 ```
-# Write the image to the SD card, please use at least 2020-02-13 if you want to use WiFi
-$ sudo dd if=YYYY-MM-DD-raspbian-buster-lite.img of=/dev/sdX bs=16M status=progress
+# Write the image to the SD card, latest verified is 2021-05-07
+
+# Linux
+$ sudo dd if=YYYY-MM-DD-raspios-buster-armhf-lite.img of=/dev/sdX bs=16M status=progress
+
+# Windows
+# I use balenaEtcher, Win32DiskImager is another option
 
 # Provision wifi settings on first boot
 $ cat bootstrap/wpa_supplicant.conf
@@ -38,7 +45,7 @@ $ cp bootstrap/ssh /mnt/boot/ssh
 Example flash and ssh/wifi:
 sudo umount /media/<user>/boot
 sudo umount /media/<user>/rootfs
-sudo dd if=2020-02-13-raspbian-stretch-lite.img of=/dev/<disk> bs=16M status=progress
+sudo dd if=2021-05-07-raspios-buster-armhf-lite.img of=/dev/<disk> bs=16M status=progress
 sync
 
 # Unplug/replug SD card
@@ -56,6 +63,12 @@ This is where there individual rPi's are set to be a master or a slave.
 I have not changed any passwords or configured SSH keys as this cannot be easily done with a headless rPi setup.  
 I am currently using DHCP static assignment to ensure each PI's MAC address is given the same IP address.  
 Update the file as required for your specific setup.
+
+# Install sshpass
+This is used as part of ansible connecting to the pi's over SSH with password auth
+```
+sudo apt-get install sshpass
+```
 
 # Install Kubernetes
 ## apt-get upgrade
