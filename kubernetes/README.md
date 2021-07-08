@@ -55,35 +55,10 @@ Append:
 Kubernetes will restart the kube-apiserver pod automatically
 ```
 
-Create some RBAC roles binding the OIDC groups to roles on the cluster:
+Create some RBAC roles binding the OIDC groups above to roles on the cluster:
 ```
-cat <<EOF | kubectl apply -f -
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: oidc-kubernetes-admin
-subjects:
-- kind: Group
-  name: kubernetes-admin
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: ClusterRole
-  name: admin
-  apiGroup: rbac.authorization.k8s.io
----
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: oidc-kubernetes-viewer
-subjects:
-- kind: Group
-  name: kubernetes-viewer
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: ClusterRole
-  name: view
-  apiGroup: rbac.authorization.k8s.io
-EOF
+kubectl apply -f oidc/viewer-clusterrolebinding.yml
+kubectl apply -f oidc/admin-clusterrolebinding.yml
 ```
 
 ## Configure the client
