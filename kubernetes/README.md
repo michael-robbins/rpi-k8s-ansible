@@ -57,8 +57,8 @@ Kubernetes will restart the kube-apiserver pod automatically
 
 Create some RBAC roles binding the OIDC groups above to roles on the cluster:
 ```
-kubectl apply -f oidc/viewer-clusterrolebinding.yml
-kubectl apply -f oidc/admin-clusterrolebinding.yml
+docker run -it --rm -v ~/.kube:/.kube -v $(pwd)/oidc:/oidc bitnami/kubectl:1.21.2 apply -f /oidc/viewer-clusterrolebinding.yml
+docker run -it --rm -v ~/.kube:/.kube -v $(pwd)/oidc:/oidc bitnami/kubectl:1.21.2 apply -f /oidc/admin-clusterrolebinding.yml
 ```
 
 ## Configure the client
