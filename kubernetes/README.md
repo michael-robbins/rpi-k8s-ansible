@@ -128,10 +128,10 @@ docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 get 
 # Kubernetes Dashboard
 ```
 # Non TLS version
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.2/aio/deploy/alternative.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/alternative.yaml
 
 # TLS version (requires a few extra steps, check https://github.com/kubernetes/dashboard)
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.2/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
 
 # Overrides the installed ServiceAccount with one with admin credentials
 kubectl delete -f dashboard/admin-rbac.yaml

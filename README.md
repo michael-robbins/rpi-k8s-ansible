@@ -100,7 +100,11 @@ This logs into node00 and copies the .kube/config file back into the local users
 Allowing a locally installed kubectl/etc to be able to query the cluster
 
 ```
+# Copy in your kube config
 ansible-playbook -i cluster.yml playbooks/copy-kube-config.yml
+
+# Run kubectl within docker
+docker run -it --rm -v ~/.kube:/.kube bitnami/kubectl:1.21.2 version
 ```
 
 # Running things on the cluster!
