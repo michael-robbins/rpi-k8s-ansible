@@ -25,6 +25,9 @@ Proxy the dashboard to your local computer and login with the above token
 ```
 kubectl proxy
 
+# If you're running kubectl in docker, need to listen on 0.0.0.0
+docker run -it --rm --name kubectl -v ~/.kube:/.kube -p 8001:8001 bitnami/kubectl:1.21.2 proxy --address 0.0.0.0
+
 # Non TLS version
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
 
