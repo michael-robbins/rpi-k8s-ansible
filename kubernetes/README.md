@@ -1,6 +1,6 @@
 # Table of contents
-[Kubernetes with OIDC Authentication](oidc/)
-[Kubernetes Dashboard](dashboard/)
+- [Kubernetes with OIDC Authentication](oidc/)
+- [Kubernetes Dashboard](dashboard/)
 
 # Helm
 A number of the examples below use and require Helm. It can be installed from here: https://github.com/helm/helm/releases
