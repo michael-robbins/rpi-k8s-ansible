@@ -1,12 +1,17 @@
 # Kubernetes Dashboard
+
+## Install the dashboard
 ```
 # Non TLS version
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/alternative.yaml
 
 # TLS version (requires a few extra steps, check https://github.com/kubernetes/dashboard)
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+```
 
-# Overrides the installed ServiceAccount with one with admin credentials
+## (Optional) Configure cluster-wide permissions
+Overrides the installed ServiceAccount with one with admin credentials, never expose your cluster publically with this
+```
 kubectl delete -f dashboard/admin-rbac.yaml
 kubectl apply -f dashboard/admin-rbac.yaml
 ```
