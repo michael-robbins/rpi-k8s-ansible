@@ -1,40 +1,8 @@
 # Table of contents
 - [Kubernetes with OIDC Authentication](oidc/)
 - [Kubernetes Dashboard](dashboard/)
+- [Helm 3](helm/)
 
-# Helm
-A number of the examples below use and require Helm. It can be installed from here: https://github.com/helm/helm/releases
-
-## Installing the helm binary
-The ansible bootstrapping here will configure your ~/.kube/config file that allows cluster access!
-If you're downloading onto the rpi directly to run, you'll need to compile it yourself or find a prebuilt ARMv7 binary.
-See https://github.com/peterhuene/arm-charts/blob/master/README.md for context around building this yourself.
-
-```
-# Linux amd64
-wget https://storage.googleapis.com/kubernetes-helm/helm-v2.14.1-linux-amd64.tar.gz
-tar xzf helm-v2.14.1-linux-amd64.tar.gz
-sudo mv linux-amd64/helm /usr/local/bin/
-sudo mv linux-amd64/tiller /usr/local/bin/
-rm -rf linux-amd64
-
-# Mac amd64
-brew install kubernetes-helm
-```
-
-## Installing helm onto the cluster
-This is actually installing 'tiller' onto the Kubernetes cluster itself. This is what helm (the client binary) interacts with.
-```
-# This creates the RBAC ServiceAccount for tiller, binding it to the 'cluster-admin' role, giving it full permissions over the cluster
-kubectl create -f helm/rbac-configuration.yaml
-
-# This installs tiller into the kube-system namespace, using kubernetes secrets for config management and the 'tiller' ServiceAccount for RBAC
-helm init --override 'spec.template.spec.containers[0].command'='{/tiller,--storage=secret}' --service-account=tiller --tiller-image=jessestuart/tiller:v2.14.1
-```
-
-Note: The above 'helm init' command is pinned to v2.12.1 as per the above helm download and copy, once helm get off their butts and produce proper arm images we can remove the '--tiller-image' flag
-
-A good example of a multiarch docker image build is https://github.com/jessestuart/tiller-multiarch/blob/master/.circleci/config.yml
 
 ## Setting up a Persistent Volume (PV)
 We apply a PV for our NFS share we setup as part of the Ansible bootstrap, it needs to match the PVC request configuration for the PVC to be successful.
