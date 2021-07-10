@@ -15,6 +15,11 @@ docker run -it --rm -v $(pwd):/apps -w /apps \
     alpine/helm:3.6.2
 ```
 
+## Bitnami Helm Charts
+Currently they do not support ARM, but it might be coming soon (so is Christmas...)
+
+See: https://github.com/bitnami/bitnami-docker-redis/issues/192
+
 ## Installing Helm charts
 Helm charts don't generally work with arm unless they have multiarch support in the images (you'll need to verify this beforehand).
 
