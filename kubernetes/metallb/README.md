@@ -1,16 +1,26 @@
-Pretty much followed the tutorial at: https://metallb.universe.tf/tutorial/layer2/
+# MetalLB
 
-```
+Provides a LoadBalancer type in Kubernetes emulating similar Cloud offerings like ALB and NLB's within AWS
+
+We setup MetalLB in 'layer 2 mode' for simplicity, and the 'concern' of all traffic flowing through a single ingress node isn't an issue given we're talking about Raspberry Pi's here.
+
+## Prerequisites
+```bash
 # Enable promiscuous mode on all wlan interfaces
 # Otherwise the routers ARP requests will not make it through to MetalLB's ARP responder
-# See: https://github.com/google/metallb/issues/253
+# See: https://github.com/metallb/metallb/issues/253
 
 ansible-playbook -i cluster.yml playbooks/wlan-promisc.yml
+```
 
+## Installation
+Pretty much followed the guide at https://metallb.universe.tf/installation/
+```bash
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/metallb.yaml
+```
 
-# Apply the configs
-
-kubectl apply -f https://raw.githubusercontent.com/danderson/metallb/v0.8.1/manifests/metallb.yaml
+## Testing
+```bash
 kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/kubernetes/metallb/layer2-config.yaml
 kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/kubernetes/metallb/nginx-lb.yaml
 ```
