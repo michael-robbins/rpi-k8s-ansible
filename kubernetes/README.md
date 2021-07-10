@@ -1,5 +1,5 @@
 # Kubernetes with OIDC Authentication
-[oidc/README.md](oidc/README.md)
+[oidc/](oidc/)
 
 # Kubernetes Dashboard
 [dashboard/README.md](dashboard/README.md)
