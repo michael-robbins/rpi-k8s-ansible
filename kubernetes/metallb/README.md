@@ -1,8 +1,7 @@
 # MetalLB
+Provides a LoadBalancer type in Kubernetes emulating similar Cloud offerings like NLB's within AWS
 
-Provides a LoadBalancer type in Kubernetes emulating similar Cloud offerings like ALB and NLB's within AWS
-
-We setup MetalLB in 'layer 2 mode' for simplicity, and the 'concern' of all traffic flowing through a single ingress node isn't an issue given we're talking about Raspberry Pi's here.
+We setup MetalLB in 'layer 2 mode' for simplicity, but the only concern here is all traffic will flow through the single ingress node, this isn't *really* an issue given we're talking about Raspberry Pi's here.
 
 ## Prerequisites
 ```bash
@@ -15,16 +14,22 @@ ansible-playbook -i cluster.yml playbooks/wlan-promisc.yml
 
 ## Installation
 Pretty much followed the guide at https://metallb.universe.tf/installation/
+
+### kubectl
 ```bash
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/metallb.yaml
+kubectl apply -f kubectl-configmap.yaml
+```
+
+### Helm
+```bash
+helm repo add metallb https://metallb.github.io/metallb
+helm install metallb metallb/metallb -f helm-configmap.yaml
 ```
 
 ## Testing
+Deploy an nginx ingress controller
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/kubernetes/metallb/layer2-config.yaml
-kubectl apply -f https://raw.githubusercontent.com/michael-robbins/rpi-k8s-ansible/master/kubernetes/metallb/nginx-lb.yaml
+kubectl apply -f nginx-ingress.yaml
 ```
-
-Only tweaks were:
-1. Updating layer2-config.yml with my local LAN range allocated to MetalLB
-2. Debugging the above wlan promiscuous mode stuff, local ARP resolution on the rpi cluster was fine, but from the local LAN it wasn't working
