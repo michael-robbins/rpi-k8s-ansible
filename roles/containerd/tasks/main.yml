@@ -33,12 +33,12 @@
 
 - name: add in docker apt repo key
   ansible.builtin.apt_key:
-    url: https://download.docker.com/linux/raspbian/gpg
+    url: https://download.docker.com/linux/debian/gpg
     state: present
 
 - name: add in docker apt repo
   ansible.builtin.apt_repository:
-    repo: deb [arch=armhf] https://download.docker.com/linux/raspbian buster stable
+    repo: deb [arch=arm64] https://download.docker.com/linux/debian buster stable
     state: present
 
 - name: update apt repos
