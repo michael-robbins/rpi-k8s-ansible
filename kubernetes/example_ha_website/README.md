@@ -2,9 +2,9 @@
 This example will create a, Ingress Controller, Service, Deployment and 5x Nginx pods that will print out the node name they are running on!
 
 ```
-pi@node00:~ $ kubectl get pods
+pi@node00:~ $ kctl get pods
 No resources found.
-pi@node00:~ $ kubectl apply -f example_ha_website/web/ingress-controller-base.yaml
+pi@node00:~ $ kctl apply -f example_ha_website/web/ingress-controller-base.yaml
 namespace "ingress-nginx" configured
 deployment.extensions "default-http-backend" configured
 service "default-http-backend" unchanged
@@ -17,17 +17,17 @@ role.rbac.authorization.k8s.io "nginx-ingress-role" unchanged
 rolebinding.rbac.authorization.k8s.io "nginx-ingress-role-nisa-binding" unchanged
 clusterrolebinding.rbac.authorization.k8s.io "nginx-ingress-clusterrole-nisa-binding" configured
 deployment.extensions "nginx-ingress-controller" configured
-pi@node00:~ $ kubectl apply -f example_ha_website/web/ingress-service-nodeport.yaml
+pi@node00:~ $ kctl apply -f example_ha_website/web/ingress-service-nodeport.yaml
 
-pi@node00:~ $ kubectl apply -f example_ha_website/web/ingress-service-deployment-web.yaml
+pi@node00:~ $ kctl apply -f example_ha_website/web/ingress-service-deployment-web.yaml
 service "webserver-service" created
 deployment.apps "webserver-deployment" created
-pi@node00:~ $ kubectl get pods
+pi@node00:~ $ kctl get pods
 NAME                                    READY     STATUS              RESTARTS   AGE
 webserver-deployment-7c7948b97f-q9bpk   0/1       ContainerCreating   0          5s
 webserver-deployment-7c7948b97f-s95tp   0/1       ContainerCreating   0          5s
 webserver-deployment-7c7948b97f-tls8n   0/1       ContainerCreating   0          5s
-pi@node00:~ $ kubectl get pods
+pi@node00:~ $ kctl get pods
 NAME                                    READY     STATUS    RESTARTS   AGE
 webserver-deployment-7c7948b97f-q9bpk   1/1       Running   0          28s
 webserver-deployment-7c7948b97f-s95tp   1/1       Running   0          28s
@@ -42,13 +42,13 @@ pi@node03:~ $ sudo shutdown -h now
 Connection to 192.168.60.63 closed by remote host.
 Connection to 192.168.60.63 closed.
 
-pi@node00:~ $ kubectl get pods -o wide
+pi@node00:~ $ kctl get pods -o wide
 NAME                                    READY     STATUS    RESTARTS   AGE       IP           NODE
 webserver-deployment-7c7948b97f-q9bpk   1/1       Running   0          23m       10.244.1.4   node04
 webserver-deployment-7c7948b97f-s95tp   1/1       Running   0          23m       10.244.4.6   node02
 webserver-deployment-7c7948b97f-tls8n   1/1       Running   0          23m       10.244.3.6   node03
 
-pi@node00:~ $ kubectl get nodes
+pi@node00:~ $ kctl get nodes
 NAME      STATUS     ROLES     AGE       VERSION
 node00    Ready      master    2d        v1.10.1
 node01    Ready      <none>    2d        v1.10.1
@@ -56,7 +56,7 @@ node02    Ready      <none>    2d        v1.10.1
 node03    NotReady   <none>    2d        v1.10.1
 node04    Ready      <none>    2d        v1.10.1
 
-pi@node00:~ $ kubectl get node node03 --output=yaml
+pi@node00:~ $ kctl get node node03 --output=yaml
 ...
   - lastHeartbeatTime: 2018-04-27T12:28:19Z
     lastTransitionTime: 2018-04-27T12:29:01Z
@@ -66,7 +66,7 @@ pi@node00:~ $ kubectl get node node03 --output=yaml
     type: Ready
 ...
 
-pi@node00:~ $ kubectl get deployment webserver-deployment --output=yaml
+pi@node00:~ $ kctl get deployment webserver-deployment --output=yaml
 ...
   - lastTransitionTime: 2018-04-27T12:29:01Z
     lastUpdateTime: 2018-04-27T12:29:01Z
@@ -81,7 +81,7 @@ pi@node00:~ $ kubectl get deployment webserver-deployment --output=yaml
   updatedReplicas: 3
 ...
 
-pi@node00:~ $ kubectl get pods -o wide
+pi@node00:~ $ kctl get pods -o wide
 NAME                                    READY     STATUS    RESTARTS   AGE       IP           NODE
 webserver-deployment-7c7948b97f-lld6r   1/1       Running   0          47s       10.244.2.4   node01
 webserver-deployment-7c7948b97f-q9bpk   1/1       Running   0          27m       10.244.1.4   node04

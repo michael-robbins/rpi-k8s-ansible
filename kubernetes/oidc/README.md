@@ -29,7 +29,7 @@ Need to try out:
 
 The second mapper from above came from trying to run 'kubectl version' from the steps further down:
 ```
-$ docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 version
+$ kctl version
 Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.2", GitCommit:"092fbfbf53427de67cac1e9fa54aaa09a28371d7", GitTreeState:"clean", BuildDate:"2021-06-16T12:59:11Z", GoVersion:"go1.16.5", Compiler:"gc", Platform:"linux/amd64"}
 error: You must be logged in to the server (the server has asked for the client to provide credentials)
 
@@ -57,8 +57,8 @@ Kubernetes will restart the kube-apiserver pod automatically
 
 Create some RBAC roles binding the OIDC groups above to roles on the cluster:
 ```
-docker run -it --rm -v ~/.kube:/.kube -v $(pwd)/oidc:/oidc bitnami/kubectl:1.21.2 apply -f /oidc/viewer-clusterrolebinding.yml
-docker run -it --rm -v ~/.kube:/.kube -v $(pwd)/oidc:/oidc bitnami/kubectl:1.21.2 apply -f /oidc/admin-clusterrolebinding.yml
+kctl apply -f /app/viewer-clusterrolebinding.yml
+kctl apply -f /app/admin-clusterrolebinding.yml
 ```
 
 ## Configure the client
@@ -85,7 +85,7 @@ curl \
     https://<KEYCLOAK_DOMAIN>/auth/realms/rpi-cluster/protocol/openid-connect/token/introspect | jq
 
 # Configure kubectl with the user
-docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 config set-credentials admin-oidc \
+kctl config set-credentials admin-oidc \
     --auth-provider=oidc \
     --auth-provider-arg=idp-issuer-url=https://<KEYCLOAK_DOMAIN>/auth/realms/rpi-cluster \
     --auth-provider-arg=client-id=kubernetes \
@@ -95,13 +95,13 @@ docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 conf
     --auth-provider-arg=extra-scopes=groups
 
 # Configure kubectl with the server
-docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 config set-cluster kubernetes --server=https://192.168.76.60:6443 --insecure-skip-tls-verify=true
+kctl config set-cluster kubernetes --server=https://192.168.76.60:6443 --insecure-skip-tls-verify=true
 
 # Create a default context and enable it
-docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 config set-context kubernetes --cluster=kubernetes --namespace=default --user=admin-oidc
-docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 config use-context kubernetes
+kctl config set-context kubernetes --cluster=kubernetes --namespace=default --user=admin-oidc
+kctl config use-context kubernetes
 
 # Verify its working
-docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 version
-docker run -it --rm --name kubectl -v ~/.kube:/.kube bitnami/kubectl:1.21.2 get nodes
+kctl version
+kctl get nodes
 ```

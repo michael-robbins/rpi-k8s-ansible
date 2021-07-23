@@ -12,7 +12,12 @@ docker run -it --rm -v $(pwd):/apps -w /apps \
     -v ~/.kube:/root/.kube -v ~/.helm:/root/.helm \
     -v ~/.config/helm:/root/.config/helm \
     -v ~/.cache/helm:/root/.cache/helm \
-    alpine/helm:3.6.2
+    alpine/helm:3.6.3
+```
+
+### Using an alias to make it easier
+```
+alias helm='docker run -it --rm -v $(pwd):/apps -w /apps -v ~/.kube:/root/.kube -v ~/.helm:/root/.helm -v ~/.config/helm:/root/.config/helm -v ~/.cache/helm:/root/.cache/helm alpine/helm:3.6.3'
 ```
 
 ## Bitnami Helm Charts

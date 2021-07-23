@@ -3,23 +3,13 @@ Followed https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
 
 ## Install through helm
 ```bash
-docker run -it --rm -v $(pwd):/apps -w /apps \
-    -v ~/.kube:/root/.kube -v ~/.helm:/root/.helm \
-    -v ~/.config/helm:/root/.config/helm \
-    -v ~/.cache/helm:/root/.cache/helm \
-    alpine/helm:3.6.2 \
-    repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
 
 # node00 (192.168.76.60) is the 'nfs server' as per the ansible configuration
 # '/mnt/kube_default_pv' is the folder that all mounts will come from
-docker run -it --rm -v $(pwd):/apps -w /apps \
-    -v ~/.kube:/root/.kube -v ~/.helm:/root/.helm \
-    -v ~/.config/helm:/root/.config/helm \
-    -v ~/.cache/helm:/root/.cache/helm \
-    alpine/helm:3.6.2 \
-    install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
-    --set nfs.server=192.168.76.60 \
-    --set nfs.path=/mnt/kube_default_pv
+helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+  --set nfs.server=192.168.76.60 \
+  --set nfs.path=/mnt/kube_default_pv
 ```
 
 ## Installing Manually
@@ -32,7 +22,7 @@ $ cd nfs-subdir-external-provisioner/deploy/
 ### Deploy the RBAC account, role and bindings
 ```bash
 # Deploy's into the 'default' namespace by default, change this if you want to target another NS
-$ kubectl create -f rbac.yaml
+$ kctl create -f rbac.yaml
 ```
 
 ### Update deployment.yaml with your NFS server and path
@@ -59,13 +49,13 @@ index 26d2a23..bd3e8a2 100644
 +            server: 192.168.76.60
 +            path: /mnt/kube_default_pv
 
-$ kubectl create -f deployment.yaml
+$ kctl create -f deployment.yaml
 ```
 
 ### Deploy class.yaml
 This deploys a [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) onto the cluster
 ```bash
-$ kubectl create -f class.yaml
+$ kctl create -f class.yaml
 ```
 
 ## Testing out Dynamic Persistant Volumes
@@ -107,24 +97,24 @@ index e5e7b7f..69f558f 100644
      args:
 
 # Apply both the above files
-kubectl create -f test-claim.yaml -f test-pod.yaml
+kctl create -f test-claim.yaml -f test-pod.yaml
 ```
 
 ### Verify a PV and PVC exist in the Dashboard OR on the CLI
 ```
-$ kubectl get pv
+$ kctl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                STORAGECLASS
          REASON   AGE
 pvc-90c04b0f-9edb-4d84-b41b-273a90b128ae   1Mi        RWX            Delete           Bound    default/test-claim   managed-nfs-storage            2m
 
-$ kubectl get pvc
+$ kctl get pvc
 NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE
 test-claim   Bound    pvc-90c04b0f-9edb-4d84-b41b-273a90b128ae   1Mi        RWX            managed-nfs-storage   99s
 ```
 
 ### Verify a Pod is created and the NFS server has the SUCCESS file written
 ```
-$ kubectl get pod test-pod
+$ kctl get pod test-pod
 NAME       READY   STATUS      RESTARTS   AGE
 test-pod   0/1     Completed   0          2m22s
 
@@ -134,15 +124,15 @@ total 0
 -rw-r--r-- 1 root root 0 Jul 28 15:02 SUCCESS
 
 # Delete the Pod & PVC
-$ kubectl delete -f deploy/test-claim.yaml -f deploy/test-pod.yaml
+$ kctl delete -f deploy/test-claim.yaml -f deploy/test-pod.yaml
 persistentvolumeclaim "test-claim" deleted
 pod "test-pod" deleted
 
 # Verify the PVC & PV are both deleted in the Dashboard OR on the CLI
-$ kubectl get pvc
+$ kctl get pvc
 No resources found.
 
-$ kubectl get pv
+$ kctl get pv
 No resources found.
 
 # Verify the PV has been 'archived' on the NFS Server (node00)
