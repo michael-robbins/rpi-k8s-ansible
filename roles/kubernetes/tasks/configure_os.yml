@@ -18,15 +18,5 @@
   register: cmdline_modified
 
 - name: reboot host
-  ansible.builtin.shell: sleep 2 && /sbin/shutdown -r now "Ansible reboot"
-  async: 1
-  poll: 0
-  when: cmdline_modified.changed
-
-- name: wait for host to come back up
-  become: false
-  ansible.builtin.wait_for_connection:
-    delay: 15
-    sleep: 2
-    timeout: 120
+  ansible.builtin.reboot:
   when: cmdline_modified.changed
