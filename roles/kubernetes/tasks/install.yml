@@ -15,7 +15,7 @@
 
 - name: add in k8s apt repo
   ansible.builtin.apt_repository:
-    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    repo: "deb [arch=arm64] https://apt.kubernetes.io/ kubernetes-xenial main"
     update_cache: yes
 
 - name: install k8s packages
