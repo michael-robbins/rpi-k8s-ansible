@@ -105,7 +105,7 @@ Allowing a locally installed kubectl/etc to be able to query the cluster
 ansible-playbook -i cluster.yml playbooks/copy-kube-config.yml
 
 # Set an alias to make it easier
-alias kubectl='docker run -it --rm -v ~/.kube:/.kube bitnami/kubectl:1.21.3'
+alias kubectl='docker run -it --rm -v ~/.kube:/.kube -v $(pwd):/pwd -w /pwd bitnami/kubectl:1.21.3'
 
 # Run kubectl within docker
 kubectl version
