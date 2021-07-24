@@ -1,3 +1,3 @@
 # Persistent Volume Providers
-- [Longhorn (recommended)](longhorn/README.md)
-- [NFS](nfs/README.md)
+- [Longhorn (recommended)](longhorn/)
+- [NFS](nfs/)
