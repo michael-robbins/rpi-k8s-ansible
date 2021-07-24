@@ -1,4 +1,44 @@
 ---
+- hosts: rpi4
+  tasks:
+    - name: CPU Frequency
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^arm_freq='
+        line: 'arm_freq=1800'
+    - name: Over Voltage
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^over_voltage='
+        line: 'over_voltage=4'
+    - name: GPU Memory Split
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^gpu_mem='
+        line: 'gpu_mem=16'
+    - name: CPU Core Frequence
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^core_freq='
+        line: 'core_freq=550'
+    - name: Boot Delay (disable)
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^boot_delay='
+        line: 'boot_delay=0'
+    - name: Disable splash screen
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^disable_splash='
+        line: 'disable_splash=1'
+    - name: Turbo for first 60 seconds (won't disable warranty)
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^initial_turbo='
+        line: 'initial_turbo=60'
+
+    - name: reboot host
+      ansible.builtin.reboot:
 - hosts: rpi3bp
   tasks:
     - name: CPU Frequency
