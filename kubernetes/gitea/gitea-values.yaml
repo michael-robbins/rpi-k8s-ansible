@@ -1,0 +1,25 @@
+---
+ingress:
+  enabled: true
+  hosts:
+    - host: git.wlanding.dalmura.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+gitea:
+  admin:
+    existingSecret: gitea-admin-secret
+
+  config:
+    APP_NAME: "This is a custom Git Server"
+    RUN_MODE: prod
+
+  database:
+    builtIn:
+      postgresql:
+        enabled: true
+
+  cache:
+    builtIn:
+      enabled: true

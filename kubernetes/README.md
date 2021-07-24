@@ -4,6 +4,7 @@
 - [Helm 3](helm/)
 - [MetalLB](metallb/)
 - [Persistant Volumes Providers](pv/)
+- [Gitea](gitea/)
 - [Example HA Website](example_ha_website/)
 
 # Misc
