@@ -25,6 +25,8 @@ kubectl apply -f kubectl-configmap.yaml
 ### Helm
 ```bash
 helm repo add metallb https://metallb.github.io/metallb
+helm repo update
+
 helm install metallb metallb/metallb -f helm-configmap.yaml
 ```
 

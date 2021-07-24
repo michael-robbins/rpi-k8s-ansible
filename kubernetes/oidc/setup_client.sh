@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -e
 
-KUBECTL_IMAGE="bitnami/kubectl:1.21.2"
+KUBECTL_IMAGE="bitnami/kubectl:1.21.3"
 CLUSTER_ENDPOINT="https://192.168.76.60:6443"
 
 DOMAIN="${1}"

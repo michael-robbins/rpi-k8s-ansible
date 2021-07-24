@@ -64,7 +64,7 @@ kubectl apply -f admin-clusterrolebinding.yml
 ## Configure the client
 There is a helper script available `oidc/setup_client.sh` that can be called like this:
 ```bash
-./oidc/setup_client.sh KEYCLOAK_DOMAIN KEYCLOAK_REALM CLIENT_ID CLIENT_SECRET USERNAME PASSWORD
+./setup_client.sh KEYCLOAK_DOMAIN KEYCLOAK_REALM CLIENT_ID CLIENT_SECRET USERNAME PASSWORD
 ```
 
 If you want to manually perform the steps here is how you can do it:

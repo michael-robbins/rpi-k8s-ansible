@@ -2,10 +2,6 @@
 
 ## Install the dashboard
 ```
-# Non TLS version
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/alternative.yaml
-
-# TLS version (requires a few extra steps, check https://github.com/kubernetes/dashboard)
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
 ```
 
@@ -23,14 +19,12 @@ kubectl get secrets -n kubernetes-dashboard -o jsonpath="{.items[?(@.metadata.an
 
 Proxy the dashboard to your local computer and login with the above token
 ```
+# If you're running natively
 kubectl proxy
 
-# If you're running kubectl in docker, need to listen on 0.0.0.0
-kubectl proxy --address 0.0.0.0
+# Our default 'kubectl' alias doesn't pass the 8001 port through, so here's one that does
+docker run -it --rm -v ~/.kube:/.kube -v $(pwd):/pwd -w /pwd -p 8001:8001 bitnami/kubectl:1.21.3 proxy --address 0.0.0.0
 
-# Non TLS version
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
-
-# TLS version
+# Navigate in your browser
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 ```

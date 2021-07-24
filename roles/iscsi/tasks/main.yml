@@ -1,0 +1,7 @@
+---
+- name: install open-iscsi on all servers
+  apt:
+    name: "{{ iscsi_packages }}"
+    state: present
+  tags:
+    - install
