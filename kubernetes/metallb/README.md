@@ -17,9 +17,9 @@ Pretty much followed the guide at https://metallb.universe.tf/installation/
 
 ### kubectl
 ```bash
-kctl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/namespace.yaml
-kctl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/metallb.yaml
-kctl apply -f kubectl-configmap.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/metallb.yaml
+kubectl apply -f kubectl-configmap.yaml
 ```
 
 ### Helm
@@ -31,5 +31,5 @@ helm install metallb metallb/metallb -f helm-configmap.yaml
 ## Testing
 Deploy an nginx ingress controller
 ```bash
-kctl apply -f nginx-ingress.yaml
+kubectl apply -f nginx-ingress.yaml
 ```

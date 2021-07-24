@@ -29,7 +29,7 @@ Need to try out:
 
 The second mapper from above came from trying to run 'kubectl version' from the steps further down:
 ```
-$ kctl version
+$ kubectl version
 Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.2", GitCommit:"092fbfbf53427de67cac1e9fa54aaa09a28371d7", GitTreeState:"clean", BuildDate:"2021-06-16T12:59:11Z", GoVersion:"go1.16.5", Compiler:"gc", Platform:"linux/amd64"}
 error: You must be logged in to the server (the server has asked for the client to provide credentials)
 
@@ -57,8 +57,8 @@ Kubernetes will restart the kube-apiserver pod automatically
 
 Create some RBAC roles binding the OIDC groups above to roles on the cluster:
 ```
-kctl apply -f /app/viewer-clusterrolebinding.yml
-kctl apply -f /app/admin-clusterrolebinding.yml
+kubectl apply -f viewer-clusterrolebinding.yml
+kubectl apply -f admin-clusterrolebinding.yml
 ```
 
 ## Configure the client
@@ -85,7 +85,7 @@ curl \
     https://<KEYCLOAK_DOMAIN>/auth/realms/rpi-cluster/protocol/openid-connect/token/introspect | jq
 
 # Configure kubectl with the user
-kctl config set-credentials admin-oidc \
+kubectl config set-credentials admin-oidc \
     --auth-provider=oidc \
     --auth-provider-arg=idp-issuer-url=https://<KEYCLOAK_DOMAIN>/auth/realms/rpi-cluster \
     --auth-provider-arg=client-id=kubernetes \
@@ -95,13 +95,13 @@ kctl config set-credentials admin-oidc \
     --auth-provider-arg=extra-scopes=groups
 
 # Configure kubectl with the server
-kctl config set-cluster kubernetes --server=https://192.168.76.60:6443 --insecure-skip-tls-verify=true
+kubectl config set-cluster kubernetes --server=https://192.168.76.60:6443 --insecure-skip-tls-verify=true
 
 # Create a default context and enable it
-kctl config set-context kubernetes --cluster=kubernetes --namespace=default --user=admin-oidc
-kctl config use-context kubernetes
+kubectl config set-context kubernetes --cluster=kubernetes --namespace=default --user=admin-oidc
+kubectl config use-context kubernetes
 
 # Verify its working
-kctl version
-kctl get nodes
+kubectl version
+kubectl get nodes
 ```

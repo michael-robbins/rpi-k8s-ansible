@@ -22,7 +22,7 @@ $ cd nfs-subdir-external-provisioner/deploy/
 ### Deploy the RBAC account, role and bindings
 ```bash
 # Deploy's into the 'default' namespace by default, change this if you want to target another NS
-$ kctl create -f rbac.yaml
+$ kubectl create -f rbac.yaml
 ```
 
 ### Update deployment.yaml with your NFS server and path
@@ -49,13 +49,13 @@ index 26d2a23..bd3e8a2 100644
 +            server: 192.168.76.60
 +            path: /mnt/kube_default_pv
 
-$ kctl create -f deployment.yaml
+$ kubectl create -f deployment.yaml
 ```
 
 ### Deploy class.yaml
 This deploys a [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) onto the cluster
 ```bash
-$ kctl create -f class.yaml
+$ kubectl create -f class.yaml
 ```
 
 ## Testing out Dynamic Persistant Volumes
@@ -97,24 +97,24 @@ index e5e7b7f..69f558f 100644
      args:
 
 # Apply both the above files
-kctl create -f test-claim.yaml -f test-pod.yaml
+kubectl create -f test-claim.yaml -f test-pod.yaml
 ```
 
 ### Verify a PV and PVC exist in the Dashboard OR on the CLI
 ```
-$ kctl get pv
+$ kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                STORAGECLASS
          REASON   AGE
 pvc-90c04b0f-9edb-4d84-b41b-273a90b128ae   1Mi        RWX            Delete           Bound    default/test-claim   managed-nfs-storage            2m
 
-$ kctl get pvc
+$ kubectl get pvc
 NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE
 test-claim   Bound    pvc-90c04b0f-9edb-4d84-b41b-273a90b128ae   1Mi        RWX            managed-nfs-storage   99s
 ```
 
 ### Verify a Pod is created and the NFS server has the SUCCESS file written
 ```
-$ kctl get pod test-pod
+$ kubectl get pod test-pod
 NAME       READY   STATUS      RESTARTS   AGE
 test-pod   0/1     Completed   0          2m22s
 
@@ -124,15 +124,15 @@ total 0
 -rw-r--r-- 1 root root 0 Jul 28 15:02 SUCCESS
 
 # Delete the Pod & PVC
-$ kctl delete -f deploy/test-claim.yaml -f deploy/test-pod.yaml
+$ kubectl delete -f deploy/test-claim.yaml -f deploy/test-pod.yaml
 persistentvolumeclaim "test-claim" deleted
 pod "test-pod" deleted
 
 # Verify the PVC & PV are both deleted in the Dashboard OR on the CLI
-$ kctl get pvc
+$ kubectl get pvc
 No resources found.
 
-$ kctl get pv
+$ kubectl get pv
 No resources found.
 
 # Verify the PV has been 'archived' on the NFS Server (node00)

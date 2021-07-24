@@ -16,9 +16,10 @@ CNI:
 ## Preparing an SD card on Linux
 ```
 # Write the image to the SD card, latest verified is 2021-05-07
+# Sourced the image from here: https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2021-05-28/
 
 # Linux
-$ sudo dd if=YYYY-MM-DD-raspios-buster-armhf-lite.img of=/dev/sdX bs=16M status=progress
+$ sudo dd if=YYYY-MM-DD-raspios-buster-arm64-lite.img of=/dev/sdX bs=16M status=progress
 
 # Windows
 # I use balenaEtcher, Win32DiskImager is another option
@@ -45,7 +46,7 @@ $ cp bootstrap/ssh /mnt/boot/ssh
 Example flash and ssh/wifi:
 sudo umount /media/<user>/boot
 sudo umount /media/<user>/rootfs
-sudo dd if=2021-05-07-raspios-buster-armhf-lite.img of=/dev/<disk> bs=16M status=progress
+sudo dd if=2021-05-07-raspios-buster-arm64-lite.img of=/dev/<disk> bs=16M status=progress
 sync
 
 # Unplug/replug SD card
@@ -104,10 +105,10 @@ Allowing a locally installed kubectl/etc to be able to query the cluster
 ansible-playbook -i cluster.yml playbooks/copy-kube-config.yml
 
 # Set an alias to make it easier
-alias kctl='docker run -it --rm -v ~/.kube:/.kube bitnami/kubectl:1.21.3'
+alias kubectl='docker run -it --rm -v ~/.kube:/.kube bitnami/kubectl:1.21.3'
 
 # Run kubectl within docker
-kctl version
+kubectl version
 ```
 
 # Running things on the cluster!

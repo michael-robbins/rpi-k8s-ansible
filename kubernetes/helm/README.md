@@ -8,7 +8,7 @@ Helm 3 no longer needs anything installed on the cluster itself so it's purely c
 
 ## Docker Client
 ```bash
-docker run -it --rm -v $(pwd):/apps -w /apps \
+docker run -it --rm -v $(pwd):/pwd -w /pwd \
     -v ~/.kube:/root/.kube -v ~/.helm:/root/.helm \
     -v ~/.config/helm:/root/.config/helm \
     -v ~/.cache/helm:/root/.cache/helm \
@@ -17,7 +17,7 @@ docker run -it --rm -v $(pwd):/apps -w /apps \
 
 ### Using an alias to make it easier
 ```
-alias helm='docker run -it --rm -v $(pwd):/apps -w /apps -v ~/.kube:/root/.kube -v ~/.helm:/root/.helm -v ~/.config/helm:/root/.config/helm -v ~/.cache/helm:/root/.cache/helm alpine/helm:3.6.3'
+alias helm='docker run -it --rm -v $(pwd):/pwd -w /pwd -v ~/.kube:/root/.kube -v ~/.helm:/root/.helm -v ~/.config/helm:/root/.config/helm -v ~/.cache/helm:/root/.cache/helm alpine/helm:3.6.3'
 ```
 
 ## Bitnami Helm Charts
