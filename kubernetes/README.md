@@ -3,6 +3,8 @@
 - [Kubernetes Dashboard](dashboard/)
 - [Helm 3](helm/)
 - [MetalLB](metallb/)
+- [Cert Manager](cert-manager/)
+- [Ingress Controller](ingress-controller/)
 - [Persistant Volumes Providers](pv/)
 - [Gitea](gitea/)
 - [Example HA Website](example_ha_website/)

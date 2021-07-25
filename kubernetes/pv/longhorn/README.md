@@ -19,17 +19,8 @@ kubectl -n longhorn-system get pods
 
 It will 'settle down' after some minutes, you'll see a bunch of pods called 'csi-xyz' all get created.
 
-## Configure UI
-We assume you've setup MetalLB or similar here.
-
-Create the nginx ingress controller, we use 'cloud' because it uses a LoadBalancer type of Service and not NodePort.
-
-LoadBalancer Service will interact with MetalLB and be given an external IP to use!
-
-See https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#a-pure-software-solution-metallb for some context about this
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.48.1/deploy/static/provider/cloud/deploy.yaml
-```
+## Longhorn UI Access
+Assumes you have an Ingress Controller setup already.
 
 Create the login details:
 ```bash
